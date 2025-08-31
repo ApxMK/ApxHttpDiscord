@@ -8,7 +8,11 @@ Please refer to the discord documentation at: https://discord.com/developers/doc
 The documentation in this package aims to be minimal due to the high probability of changing discord documentation on the official site.
 However, documentation will be provided to clarify possible instances of misunderstanding when using this package where neccesary.
 The msgspec classes in this package are used for the purposes of:
-- type validation of JSON data received either from the discord websocket connection or HTTP API endpoints.
+- type validation of JSON data, for example when received from the discord websocket connection or HTTP API endpoints.
+- value validation of instantiated msgspec representation classes, conditional on the fields of the classes and
+implementing the conditional relations defined in the official documentation for the msgspec classes.
+For example,
+In the webhook endpoints, the prescence of the files JSON param field indicates that the attachment field should be non-null.
 - a serializable interface format for another common data format(e.g msgpack)
 
 IMPORTANT NOTICES:
