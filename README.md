@@ -1,4 +1,4 @@
-#Official documentation for the APX http discord python package.
+# Official documentation for the APX http discord python package.
 ##Updated notices
 
 Please refer to the discord documentation at: https://discord.com/developers/docs/intro, for more details on the classes.
