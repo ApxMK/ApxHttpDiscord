@@ -2,6 +2,9 @@
 - Please refer to the "Further development plans" enhancement type issue under github "Issues" section to understand the proposed future feature development plans.
 - "Development schedule" section in the README.md for the "in progress" feature development.
 - "Important application notices" section in the README.md for the non-exhaustive list of conditions which may affect the application of the package for your intended use case.
+- This package is subject to changes in the foreseeable future, all updates will be viewable from the official github repository.
+- Join the official discord for notifications on updates:
+https://discord.gg/Z63gxmFx
 
 ## Design decisions
 
@@ -18,7 +21,6 @@
     For example,
     In the webhook endpoints, the prescence of the files JSON param field indicates that the attachment field should be non-null.
     - a serializable interface format for another common data format(e.g msgpack)
-- This package is subject to changes in the foreseeable future, all updates will be viewable from the official github repository.
 
 ###### Activity msgspec class
 - The Activity msgspec class is excluded from this module, this package intends to model discord HTTP endpoint data structures only and not the gateway websocket structures. 
