@@ -16,13 +16,12 @@
     For example,
     In the webhook endpoints, the prescence of the files JSON param field indicates that the attachment field should be non-null.
     - a serializable interface format for another common data format(e.g msgpack)
+- This package is subject to changes in the foreseeable future, all updates will be viewable from the official github repository.
 
 ###### Activity msgspec class
 - The Activity msgspec class is excluded from this module, this package intends to model discord HTTP endpoint data structures only and not the gateway websocket structures. 
-If you do decide to use the SetActivityArgument class in the RPC discord section, consider writing your own Activity class. 
-- Moreover, this package is subject to changes in the foreseeable future, all updates will be viewable from the official github repository.
-
-In the RPC section of this module, the SetActivityArgument class uses the missing Activity msgspec class:
+- If you do decide to use the SetActivityArgument class in the RPC discord section, consider writing your own Activity class. 
+- In the RPC section of this module, the SetActivityArgument class uses the missing Activity msgspec class:
 class SetActivityArgument(msgspec.Struct, kw_only=True):
     pid: int  # application's process id
     activity: 'Activity'  # rich presence to assign to the user (limited to Playing, Listening, Watching, or Competing)
