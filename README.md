@@ -1,12 +1,19 @@
 # Official documentation for the APX http discord python package.
 - Please refer to the "Further development plans" enhancement type issue under github "Issues" section to understand the proposed future feature development plans.
 - [Development schedule](#development-schedule) section in the README.md for the "in progress" feature development.
-- "Important application notices" section in the README.md for the non-exhaustive list of conditions which may affect the application of the package for your intended use case.
+- [Important application notices](#important-application-notices) section in the README.md for the non-exhaustive list of conditions which may affect the application of the package for your intended use case.
 - This package is subject to changes in the foreseeable future, all updates will be viewable from the official github repository.
 - Join the official discord to receive notifications on updates to the package:
 https://discord.gg/Z63gxmFx
 - If you're interested in becoming a contributor, please do so by applying in the official discord for this package; a registeration process will be explained thereafter. All donations and sponsorship funds will be shared amongst contributors proportional to the amount of work contributed. Lastly, details of the procedure for creating new github issues(e.g structure) will be outlined in the discord.
 - Please consider that this package is public, maintained free of charge by our contributors who work hard to keep the package functional. The upmost gratitude is given to those who sponsor and donate funds to keep the project ongoing. A memorial section will be viewable in the discord to honor our supporters.
+
+# Table of Contents
+- [Design decisions](#design-decisions)
+- [Development schedule](#development-schedule)
+- [Important application notices](#important-application-notices)
+  - [Discord Activity class](#discord-activity-class)
+  - [Snowflake fields](#snowflake-fields)
 
 ## Design decisions
 
@@ -24,9 +31,10 @@ https://discord.gg/Z63gxmFx
     In the webhook endpoints, the prescence of the files JSON param field indicates that the attachment field should be non-null.
     - a serializable interface format for another common data format(e.g msgpack)
 
-###### Activity msgspec class
-- The Activity msgspec class is excluded from this module, this package intends to model discord HTTP endpoint data structures only and not the gateway websocket structures. 
-- If you do decide to use the SetActivityArgument class in the RPC discord section, consider writing your own Activity class. 
+###### Discord Activity class
+- The package directly avoids modelling discord gateway websocket structures. 
+- As a result, the Activity msgspec class implementation of the Discord Activity class is excluded from this package.
+- If you should decide to use the discord Activity class(e.g in SetActivityArgument class of the RPC discord section), consider writing your own Activity msgspec class. 
 - In the RPC section of this module, the SetActivityArgument class uses the missing Activity msgspec class:
   class SetActivityArgument(msgspec.Struct, kw_only=True):
       pid: int  # application's process id
