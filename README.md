@@ -3,6 +3,8 @@
 - "Development schedule" section in the README.md for the "in progress" feature development.
 - "Important application notices" section in the README.md for the non-exhaustive list of conditions which may affect the application of the package for your intended use case.
 
+## Design decisions
+
 ## Development schedule
 
 ## Important application notices
