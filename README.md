@@ -22,7 +22,6 @@
 - The Activity msgspec class is excluded from this module, this package intends to model discord HTTP endpoint data structures only and not the gateway websocket structures. 
 - If you do decide to use the SetActivityArgument class in the RPC discord section, consider writing your own Activity class. 
 - In the RPC section of this module, the SetActivityArgument class uses the missing Activity msgspec class:
-- 
-class SetActivityArgument(msgspec.Struct, kw_only=True):
-    pid: int  # application's process id
-    activity: 'Activity'  # rich presence to assign to the user (limited to Playing, Listening, Watching, or Competing)
+    class SetActivityArgument(msgspec.Struct, kw_only=True):
+        pid: int  # application's process id
+        activity: 'Activity'  # rich presence to assign to the user (limited to Playing, Listening, Watching, or Competing)
