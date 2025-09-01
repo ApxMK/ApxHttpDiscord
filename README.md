@@ -5,7 +5,7 @@
 - This package is subject to changes in the foreseeable future, all updates will be viewable from the official github repository.
 - Join the official discord to receive notifications on updates to the package:
 https://discord.gg/Z63gxmFx
-- If you're interested in becoming a contributor, please do so by applying in the official discord for this package; a registeration process will be explained thereafter. All donations and sponsors will be shared amongst contributors proportional to the amount of work contributed. Lastly, details of the procedure for creating new github issues(e.g structure) will be outlined in the discord.
+- If you're interested in becoming a contributor, please do so by applying in the official discord for this package; a registeration process will be explained thereafter. All donations and sponsorship funds will be shared amongst contributors proportional to the amount of work contributed. Lastly, details of the procedure for creating new github issues(e.g structure) will be outlined in the discord.
 - Please consider that this package is public, maintained free of charge by our contributors who work hard to keep the package functional. The upmost gratitude is given to those who sponsor and donate funds to keep the project ongoing. A memorial section will be viewable in the discord to honor our supporters.
 
 ## Design decisions
