@@ -3,7 +3,7 @@
 - "Development schedule" section in the README.md for the "in progress" feature development.
 - "Important application notices" section in the README.md for the non-exhaustive list of conditions which may affect the application of the package for your intended use case.
 - This package is subject to changes in the foreseeable future, all updates will be viewable from the official github repository.
-- Join the official discord for notifications on updates:
+- Join the official discord to receive notifications on updates to the package:
 https://discord.gg/Z63gxmFx
 
 ## Design decisions
