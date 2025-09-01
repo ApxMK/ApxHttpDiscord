@@ -31,3 +31,7 @@ https://discord.gg/Z63gxmFx
   class SetActivityArgument(msgspec.Struct, kw_only=True):
       pid: int  # application's process id
         activity: 'Activity'  # rich presence to assign to the user (limited to Playing, Listening, Watching, or Competing)
+
+###### Snowflake fields
+- Snowflake fields in the discord data tables are implemented in msgspec classes as 'str' rather than 'int'. Remember to convert snowflake field values from 'str' to 'int' before using them in your application.
+  
