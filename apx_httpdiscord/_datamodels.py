@@ -69,7 +69,6 @@ class Locales(enum.StrEnum):
     KOREAN = "ko"
 
 #Receiving and responding to discord interactions-
-##Discord response API data models
 class InteractionTypes(enum.IntEnum):
     PING = 1
     APPLICATION_COMMAND = 2
@@ -97,6 +96,90 @@ class Interaction(msgspec.Struct, kw_only=True):
     """
     This interaction is received from discord for slash commands, user context menu commands, message context menu commands, message components and modal submits.
     """
+
+    #Urls FOR InteractionResponse ENDPOINTS
+    class InteractionResponseUrls(enum.StrEnum):
+        CREATE_INTERACTION_RESPONSE = "/interactions/{interaction.id}/{interaction.token}/callback"
+        GET_ORIGINAL_INTERACTION_RESPONSE = "/webhooks/{application.id}/{interaction.token}/messages/@original"
+        EDIT_ORIGINAL_INTERACTION_RESPONSE = GET_ORIGINAL_INTERACTION_RESPONSE
+        DELETE_ORIGINAL_INTERACTION_RESPONSE = GET_ORIGINAL_INTERACTION_RESPONSE
+
+    #QUERY PARAMS FOR InteractionResponse ENDPOINTS
+    class CreateInteractionResponseQueryParams(msgspec.Struct, omit_defaults=True):
+        with_response: bool = False
+
+    class GetOriginalInteractionResponseQueryParams(msgspec.Struct, omit_defaults=True):
+        thread_id: str | None = None
+
+    class EditOriginalInteractionResponseQueryParams(msgspec.Struct, omit_defaults=True):
+        thread_id: str | None = None
+
+    #JSON PARAMS FOR InteractionResponse ENDPOINTS
+    class EditOriginalInteractionResponseJSONParams(msgspec.Struct, omit_defaults=True):
+        content: str | None = None
+        embeds: list["Embed"] | None = None
+        flags: int | None = None  # class MessageFlags
+        allowed_mentions: "AllowedMentions" | None = None
+        components: list["Component"] | None = None
+        file_locations: list[str] | None = None
+        attachments: list["Attachment"] | None = None
+
+    __RELATED_ROUTES : ClassVar[tuple] = ()
+
+    @classmethod
+    def init_related_routes(cls):
+        if(cls.__RELATED_ROUTES == ()):
+            cls.__RELATED_ROUTES = (
+                {
+                    cls.Urls.CREATE_INTERACTION_RESPONSE : {
+                        HttpMethods.POST : {
+                            "url_params" :  ("interaction"),
+                            "query_params": CreateInteractionResponseQueryParams,
+                            "payload" : InteractionResponse,
+                            "additional_optional_headers": [],
+                            "return_type" : InteractionCallbackResponse | 204
+                            }
+                    },
+                    #SAME AS GET_WEBHOOK_MESSAGE
+                    cls.Urls.GET_ORIGINAL_INTERACTION_RESPONSE : {
+                        HttpMethods.GET : {
+                            "url_params" :  ("application", "interaction"),
+                            "query_params": GetOriginalInteractionResponseQueryParams,
+                            "payload" : None, 
+                            "additional_optional_headers": [],
+                            "return_type" : InteractionResponse
+                            }
+                    },
+                    cls.Urls.EDIT_ORIGINAL_INTERACTION_RESPONSE : {
+                        HttpMethods.PATCH : {
+                            "url_params" :  ("application", "interaction"),
+                            "query_params": EditOriginalInteractionResponseQueryParams,
+                            "payload" : EditOriginalInteractionResponseJSONParams, 
+                            "additional_optional_headers": [],
+                            "return_type" : InteractionResponse
+                            }
+                    },
+                    cls.Urls.DELETE_ORIGINAL_INTERACTION_RESPONSE : {
+                        HttpMethods.DELETE : {
+                            "url_params" :  ("application", "interaction"),
+                            "query_params": None,
+                            "payload" : None,
+                            "additional_optional_headers": [],
+                            "return_type" : 204
+                            }
+                    },
+                }
+            )
+        return cls.__RELATED_ROUTES
+
+    @classmethod
+    def get_related_routes(cls):  # class-level access
+        return cls.init_related_routes()
+
+    @property
+    def RELATED_ROUTES(self):   # instance-level access
+        return self.init_related_routes()
+
     id: str
     application_id: str
     type: 'InteractionTypes'
@@ -173,46 +256,6 @@ class MessageInteraction(msgspec.Struct, kw_only=True):
     member : 'GuildMember' | None = None
 
 class InteractionResponse(msgspec.Struct, kw_only=True):
-    class Urls(enum.StrEnum):
-        CREATE_INTERACTION_RESPONSE = "/interactions/{interaction.id}/{interaction.token}/callback"
-        
-        BASE_WEBHOOK_URL = "/webhooks/{application.id}/{interaction.token}/messages/@original"
-        GET_ORIGINAL_INTERACTION_RESPONSE = BASE_WEBHOOK_URL
-        EDIT_ORIGINAL_INTERACTION_RESPONSE = BASE_WEBHOOK_URL
-        DELETE_ORIGINAL_INTERACTION_RESPONSE = BASE_WEBHOOK_URL
-
-    __RELATED_ROUTES : ClassVar[tuple] = (
-        {
-            Urls.CREATE_INTERACTION_RESPONSE : {
-                HttpMethods.POST : {"payload" : InteractionResponse, "return_type" : InteractionCallbackResponse}
-            },
-            Urls.GET_ORIGINAL_INTERACTION_RESPONSE : {
-                HttpMethods.GET : {"payload" : None, "return_type" : InteractionResponse}
-            },
-            Urls.EDIT_ORIGINAL_INTERACTION_RESPONSE : {
-                HttpMethods.PATCH : {"payload" : None, "return_type" : InteractionResponse}
-            },
-            Urls.DELETE_ORIGINAL_INTERACTION_RESPONSE : {
-                HttpMethods.DELETE : {"payload" : None, "return_type" : InteractionResponse}
-            },
-        },
-        )
-
-    class QueryParams(msgspec.Struct):
-        """
-        A combined query parameter data model for InteractionResponse related routes.
-        """
-        #CREATE_INTERACTION_RESPONSE ROUTE QUERY PARAMS
-        with_response : bool | None = None
-
-    @classmethod
-    def get_outbound_data_routes(cls):  # class-level access
-        return cls.__OUTBOUND_DATA_ROUTES
-
-    @property
-    def OUTBOUND_DATA_ROUTES(self):   # instance-level access
-        return self.__OUTBOUND_DATA_ROUTES
-
     type: 'InteractionCallbackTypes'
     data: 'InteractionCallbackData' | None = None
 
@@ -833,6 +876,54 @@ class Channel(msgspec.Struct, kw_only=True):
     """
     Channel represents a guild channel or DM channel in the Discord application
     """
+
+    class WebhookUrls(enum.StrEnum):
+        CREATE_WEBHOOK = "/channels/{channel.id}/webhooks"
+        GET_CHANNEL_WEBHOOKS = CREATE_WEBHOOK
+
+    class CreateWebhookJSONParams(msgspec.Struct, kw_only=True):
+        """
+        JSON parameters for creating a Discord webhook.
+        """
+        name: str                   # required: 1-80 characters
+        avatar: str | None = None   # optional: base64 image data
+
+    __RELATED_ROUTES : ClassVar[tuple] = ()
+    @classmethod
+    def init_related_routes(cls):
+        if(cls.__RELATED_ROUTES == ()):
+            cls.__RELATED_ROUTES = (
+                {
+                    cls.Urls.CREATE_WEBHOOK : {
+                        HttpMethods.POST : {
+                            "url_params" : ("channel"),
+                            "query_params": None,
+                            "payload" : cls.CreateWebhookJSONParams, 
+                            "additional_optional_headers": ["X-Audit-Log-Reason"],
+                            "return_type" : Webhook
+                            }
+                    },
+                    cls.Urls.GET_CHANNEL_WEBHOOKS : {
+                        HttpMethods.GET : {
+                            "url_params" : ("channel"),
+                            "query_params": None,
+                            "payload" : None,
+                            "additional_optional_headers": [],
+                            "return_type" : list[Webhook]
+                            }
+                    },
+                }
+            )
+        return cls.__RELATED_ROUTES
+
+    @classmethod
+    def get_related_routes(cls):  # class-level access
+        return cls.init_related_routes()
+
+    @property
+    def RELATED_ROUTES(self):   # instance-level access
+        return self.init_related_routes()
+
     id: str  # snowflake
     type: 'ChannelTypes'
     guild_id: str | None = None  # snowflake
@@ -1174,6 +1265,38 @@ class Guild(msgspec.Struct, kw_only=True):
     """
     Guild represents an isolated collection of users and channels, and are often referred to as "servers" in the UI.
     """
+
+    class WebhookUrls(enum.StrEnum):
+        GET_GUILD_WEBHOOKS = "/guilds/{guild.id}/webhooks"
+
+    __RELATED_ROUTES : ClassVar[tuple] = ()
+
+    @classmethod
+    def init_related_routes(cls):
+        if(cls.__RELATED_ROUTES == ()):
+            cls.__RELATED_ROUTES = (
+                {
+                    cls.Urls.GET_GUILD_WEBHOOKS : {
+                        HttpMethods.GET : {
+                            "url_params" : ("guild"),
+                            "query_params": None,
+                            "payload" : None,
+                            "additional_optional_headers": [],
+                            "return_type" : list[Webhook]
+                            }
+                    },
+                }
+            )
+        return cls.__RELATED_ROUTES
+
+    @classmethod
+    def get_related_routes(cls):  # class-level access
+        return cls.init_related_routes()
+
+    @property
+    def RELATED_ROUTES(self):   # instance-level access
+        return self.init_related_routes()
+
     id : str
     name : str
     icon : str | None = None
@@ -2105,21 +2228,22 @@ class WebhookEventTypes(enum.StrEnum):
     QuestUserEnrollment = "QUEST_USER_ENROLLMENT"
 
 class Webhook(msgspec.Struct, kw_only=True):
-    class Urls(enum.StrEnum):
-        CREATE_WEBHOOK = "/channels/{channel.id}/webhooks"
-        GET_CHANNEL_WEBHOOKS = CREATE_WEBHOOK
-        GET_GUILD_WEBHOOKS = "/guilds/{guild.id}/webhooks"
+    class WebhookUrls(enum.StrEnum):
+
+        #These URL's require only the Webhook class alone to resolve
         GET_WEBHOOK = "/webhooks/{webhook.id}"
         GET_WEBHOOK_WITH_TOKEN = "/webhooks/{webhook.id}/{webhook.token}"
         MODIFY_WEBHOOK = GET_WEBHOOK
         MODIFY_WEBHOOK_WITH_TOKEN = GET_WEBHOOK_WITH_TOKEN
         DELETE_WEBHOOK = GET_WEBHOOK
         DELETE_WEBHOOK_WITH_TOKEN = GET_WEBHOOK_WITH_TOKEN
-        EXECUTE_WEBHOOK = "/webhooks/{webhook.id}/{webhook.token}"
+        EXECUTE_WEBHOOK = GET_WEBHOOK_WITH_TOKEN #returns Message
         EXECUTE_SLACK_COMPATIBLE_WEBHOOK = "/webhooks/{webhook.id}/{webhook.token}/slack"
         EXECUTE_GITHUB_COMPATIBLE_WEBHOOK = "/webhooks/{webhook.id}/{webhook.token}/github"
-        GET_WEBHOOK_MESSAGE = "/webhooks/{webhook.id}/{webhook.token}/messages/{message.id}"
-        EDIT_WEBHOOK_MESSAGE = GET_WEBHOOK_MESSAGE
+
+        #These URL's require more than the Webhook msgspec class to resolve
+        GET_WEBHOOK_MESSAGE = "/webhooks/{webhook.id}/{webhook.token}/messages/{message.id}" #returns Message
+        EDIT_WEBHOOK_MESSAGE = GET_WEBHOOK_MESSAGE #returns Message
         DELETE_WEBHOOK_MESSAGE = GET_WEBHOOK_MESSAGE
 
     #QUERY PARAMS FOR WEBHOOK ENDPOINTS
@@ -2148,18 +2272,20 @@ class Webhook(msgspec.Struct, kw_only=True):
         thread_id: str | None = None  # ID of the thread the message is in (snowflake)
 
     #JSON PARAMS FOR WEBHOOK ENDPOINTS
-    class CreateWebhookJSONParams(msgspec.Struct, kw_only=True):
+    class ModifyWebhookJSONParams(msgspec.Struct, kw_only=True, omit_defaults=True):
+        """
+        JSON body for PATCH /webhooks/{webhook.id}
+        """
+        name: str | None = None
+        avatar: str | None = None  # image data (base64-encoded)
+        channel_id: str | None = None  # snowflake (channel ID)
+
+    class ModifyWebhookWithTokenJSONParams(msgspec.Struct, kw_only=True):
         """
         JSON parameters for creating a Discord webhook.
         """
         name: str                   # required: 1-80 characters
         avatar: str | None = None   # optional: base64 image data
-
-    class ModifyWebhookJSONParams(msgspec.Struct, kw_only=True, omit_defaults=True):
-        """JSON body for PATCH /webhooks/{webhook.id}"""
-        name: str | None = None
-        avatar: str | None = None  # image data (base64-encoded)
-        channel_id: str | None = None  # snowflake (channel ID)
 
     class ExecuteWebhookJSONParams(msgspec.Struct, kw_only=True, omit_defaults=True):
         """
@@ -2185,14 +2311,13 @@ class Webhook(msgspec.Struct, kw_only=True):
     class EditWebhookMessageJSONParams(msgspec.Struct, kw_only=True, omit_defaults=True):
         content: str | None = None
         embeds: list["Embed"] | None = None
-        flags: int | None = None  # bitfield: SUPPRESS_EMBEDS, IS_COMPONENTS_V2
+        flags: int | None = None  # class MessageFlags
         allowed_mentions: "AllowedMentions" | None = None
         components: list["Component"] | None = None
         file_locations: list[str] | None = None
         attachments: list["Attachment"] | None = None
         poll: "Poll" | None = None
 
-    ModifyWebhookWithTokenJSONParams = CreateWebhookJSONParams
     GetWebhookMessageQueryParams = GetWebhookMessageQueryParams
 
     __RELATED_ROUTES : ClassVar[tuple] = ()
@@ -2202,107 +2327,93 @@ class Webhook(msgspec.Struct, kw_only=True):
         if(cls.__RELATED_ROUTES == ()):
             cls.__RELATED_ROUTES = (
                 {
-                    cls.Urls.CREATE_WEBHOOK : {
-                        HttpMethods.POST : {
-                            "payload" : cls.CreateWebhookJSONParams, 
-                            "query_params": None,
-                            "additioanl_optional_headers": ["X-Audit-Log-Reason"],
-                            "return_type" : Webhook
-                            }
-                    },
-                    cls.Urls.GET_CHANNEL_WEBHOOKS : {
-                        HttpMethods.GET : {
-                            "payload" : None,
-                            "query_params": None,
-                            "additioanl_optional_headers": [],
-                            "return_type" : list[Webhook]
-                            }
-                    },
-                    cls.Urls.GET_GUILD_WEBHOOKS : {
-                        HttpMethods.GET : {
-                            "payload" : None,
-                            "query_params": None,
-                            "additioanl_optional_headers": [],
-                            "return_type" : list[Webhook]
-                            }
-                    },
                     cls.Urls.GET_WEBHOOK : {
                         HttpMethods.GET : {
-                            "payload" : None,
+                            "url_params": ("webhook"),
                             "query_params": None,
-                            "additioanl_optional_headers": [],
+                            "payload" : None,
+                            "additional_optional_headers": [],
                             "return_type" : Webhook
                             }
                     },
                     cls.Urls.GET_WEBHOOK_WITH_TOKEN : {
                         HttpMethods.GET : {
-                            "payload" : None,
+                            "url_params": ("webhook"),
                             "query_params": None,
-                            "additioanl_optional_headers": [],
+                            "payload" : None,
+                            "additional_optional_headers": [],
                             "return_type" : Webhook
                             }
                     },
                     cls.Urls.MODIFY_WEBHOOK : {
                         HttpMethods.PATCH : {
-                            "payload" : cls.ModifyWebhookJSONParams,
+                            "url_params": ("webhook"),
                             "query_params": None,
-                            "additioanl_optional_headers": ["X-Audit-Log-Reason"],
+                            "payload" : cls.ModifyWebhookJSONParams,
+                            "additional_optional_headers": ["X-Audit-Log-Reason"],
                             "return_type" : Webhook
                             }
                     },
                     cls.Urls.MODIFY_WEBHOOK_WITH_TOKEN : {
                         HttpMethods.PATCH : {
-                            "payload" : cls.ModifyWebhookWithTokenJSONParams,
+                            "url_params": ("webhook"),
                             "query_params": None,
-                            "additioanl_optional_headers": ["X-Audit-Log-Reason"],
+                            "payload" : cls.ModifyWebhookWithTokenJSONParams,
+                            "additional_optional_headers": ["X-Audit-Log-Reason"],
                             "return_type" : Webhook
                             }
                     },
                     cls.Urls.DELETE_WEBHOOK : {
                         HttpMethods.DELETE : {
-                            "payload" : None,
+                            "url_params": ("webhook"),
                             "query_params": None,
-                            "additioanl_optional_headers": ["X-Audit-Log-Reason"],
+                            "payload" : None,
+                            "additional_optional_headers": ["X-Audit-Log-Reason"],
                             "return_type" : 204
                             }
                     },
                     cls.Urls.DELETE_WEBHOOK_WITH_TOKEN: {
                         HttpMethods.DELETE: {
-                            "payload": None,
+                            "url_params": ("webhook"),
                             "query_params": None,
-                            "additioanl_optional_headers": ["X-Audit-Log-Reason"],
+                            "payload": None,
+                            "additional_optional_headers": ["X-Audit-Log-Reason"],
                             "return_type": 204
                             }
                     },
                     cls.Urls.EXECUTE_WEBHOOK: {
                         HttpMethods.POST: {
-                            "payload": ExecuteWebhookJSONParams,
+                            "url_params": ("webhook"),
                             "query_params": ExecuteWebhookQueryParams,
-                            "additioanl_optional_headers": [],
+                            "payload": ExecuteWebhookJSONParams,
+                            "additional_optional_headers": [],
                             "return_type": Message | 204
                             }
                     },
                     cls.Urls.GET_WEBHOOK_MESSAGE: {
                         HttpMethods.GET: {
-                            "payload": None,
+                            "url_params": ("webhook", "message"),
                             "query_params": GetWebhookMessageQueryParams,
-                            "additioanl_optional_headers": [],
+                            "payload": None,
+                            "additional_optional_headers": [],
                             "return_type": Message
                             }
                     },
                     cls.Urls.EDIT_WEBHOOK_MESSAGE: {
                         HttpMethods.PATCH: {
-                            "payload": EditWebhookMessageJSONParams,
+                            "url_params": ("webhook", "message"),
                             "query_params": EditWebhookMessageQueryParams,
-                            "additioanl_optional_headers": [],
+                            "payload": EditWebhookMessageJSONParams,
+                            "additional_optional_headers": [],
                             "return_type": Message
                             }
                     },
                     cls.Urls.DELETE_WEBHOOK_MESSAGE: {
                         HttpMethods.DELETE: {
-                            "payload": None,
+                            "url_params": ("webhook", "message"),
                             "query_params": DeleteWebhookMessageQueryParams,
-                            "additioanl_optional_headers": [],
+                            "payload": None,
+                            "additional_optional_headers": [],
                             "return_type": 204
                             }
                     },
@@ -2318,7 +2429,7 @@ class Webhook(msgspec.Struct, kw_only=True):
     def RELATED_ROUTES(self):   # instance-level access
         return self.init_related_routes()
 
-    id: str  # snowflake
+    id: str  # snowflake, webhook id
     type: 'WebhookTypes'
     guild_id: str | None = None  # snowflake
     channel_id: str | None = None  # snowflake
