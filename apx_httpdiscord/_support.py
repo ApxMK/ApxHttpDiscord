@@ -1,4 +1,4 @@
-class ApxDiscordSupport():
+class DiscordSupport():
 
     def __init__(self):
         pass

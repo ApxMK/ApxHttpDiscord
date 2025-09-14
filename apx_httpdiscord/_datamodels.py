@@ -95,6 +95,22 @@ class InteractionCallbackTypes(enum.IntEnum):
 class Interaction(msgspec.Struct, kw_only=True):
     """
     This interaction is received from discord for slash commands, user context menu commands, message context menu commands, message components and modal submits.
+    
+    ***CREATE, GET, EDIT, DELETE FOLLOWUP MESSAGES require json and query string parameter
+    testing. 
+    In particular, poll is absent from EditFollowupMessage during mapping.
+    Addtionally, thread_id is included in CreateFollowupMessage when the documentation 
+    explicitly declares an absence of thread_id for this endpoint.
+    GetFollowupMessage, EditFollowupMessage declare similarities to their counter part
+    webhook endpoint json and query string data structures. But, remains unclear whether
+    thread_id should be included or whether the remaining json and query string parameters
+    can be forfeited.
+    DeleteFollowMessage declares no similarity to the counterpart webhook endpoint, remains
+    unclear whether thread_id can be forfeited.
+
+    Therefore, json and query string parameters require verification for the above endpoints.
+    
+    
     """
 
     #Urls FOR InteractionResponse ENDPOINTS
@@ -103,6 +119,11 @@ class Interaction(msgspec.Struct, kw_only=True):
         GET_ORIGINAL_INTERACTION_RESPONSE = "/webhooks/{application.id}/{interaction.token}/messages/@original"
         EDIT_ORIGINAL_INTERACTION_RESPONSE = GET_ORIGINAL_INTERACTION_RESPONSE
         DELETE_ORIGINAL_INTERACTION_RESPONSE = GET_ORIGINAL_INTERACTION_RESPONSE
+        
+        CREATE_FOLLOWUP_MESSAGE = "/webhooks/{application.id}/{interaction.token}"
+        GET_FOLLOWUP_MESSAGE = "/webhooks/{application.id}/{interaction.token}/messages/{message.id}"
+        EDIT_FOLLOWUP_MESSAGE = GET_FOLLOWUP_MESSAGE
+        DELETE_FOLLOWUP_MESSAGE = GET_FOLLOWUP_MESSAGE
 
     #QUERY PARAMS FOR InteractionResponse ENDPOINTS
     class CreateInteractionResponseQueryParams(msgspec.Struct, omit_defaults=True):
@@ -114,6 +135,18 @@ class Interaction(msgspec.Struct, kw_only=True):
     class EditOriginalInteractionResponseQueryParams(msgspec.Struct, omit_defaults=True):
         thread_id: str | None = None
 
+    class CreateFollowupMessageQueryParams(msgspec.Struct):
+        """
+        Query parameters for the CreateFollowupMessage endpoint.
+        """
+        thread_id: str | None = None  # ID of the thread to send the message to
+
+    class GetFollowupMessageQueryParams(msgspec.Struct):
+        thread_id: str | None = None  # ID of the thread where the message resides
+
+    class EditFollowupMessageQueryParams(msgspec.Struct):
+        thread_id: str | None = None  # ID of the thread where the message resides
+
     #JSON PARAMS FOR InteractionResponse ENDPOINTS
     class EditOriginalInteractionResponseJSONParams(msgspec.Struct, omit_defaults=True):
         content: str | None = None
@@ -124,6 +157,29 @@ class Interaction(msgspec.Struct, kw_only=True):
         file_locations: list[str] | None = None
         attachments: list["Attachment"] | None = None
 
+    class CreateFollowupMessageJSONParams(msgspec.Struct):
+        """
+        JSON/Form body parameters for the CreateFollowupMessage endpoint.
+        """
+        content: str | None = None  # Max 2000 characters
+        embeds: list["Embed"] | None = None  # Up to 10 embeds
+        allowed_mentions: "AllowedMentions" | None = None
+        components: list["Component"] | None = None  # Requires IS_COMPONENTS_V2 flag
+        attachments: list["Attachment"] | None = None
+        file_locations: list[str] | None = None
+        flags: int | None = None  # e.g., MessageFlags.EPHEMERAL | MessageFlags.IS_COMPONENTS_V2
+        tts: bool | None = None
+
+    class EditFollowupMessageJSONParams(msgspec.Struct):
+        content: str | None = None  # Max 2000 characters
+        embeds: list["Embed"] | None = None  # Up to 10 embeds
+        allowed_mentions: "AllowedMentions" | None = None
+        components: list["Component"] | None = None  # Requires IS_COMPONENTS_V2 flag
+        attachments: list["Attachment"] | None = None
+        file_locations: list[str] | None = None
+        flags: int | None = None  # e.g., MessageFlags.EPHEMERAL | MessageFlags.IS_COMPONENTS_V2
+        tts: bool | None = None
+ 
     __RELATED_ROUTES : ClassVar[tuple] = ()
 
     @classmethod
@@ -162,6 +218,42 @@ class Interaction(msgspec.Struct, kw_only=True):
                     cls.Urls.DELETE_ORIGINAL_INTERACTION_RESPONSE : {
                         HttpMethods.DELETE : {
                             "url_params" :  ("application", "interaction"),
+                            "query_params": None,
+                            "payload" : None,
+                            "additional_optional_headers": [],
+                            "return_type" : 204
+                            }
+                    },
+                    cls.Urls.CREATE_FOLLOWUP_MESSAGE : {
+                        HttpMethods.POST : {
+                            "url_params" :  ("application", "interaction"),
+                            "query_params": CreateFollowupMessageQueryParams,
+                            "payload" : CreateFollowupMessageJSONParams,
+                            "additional_optional_headers": [],
+                            "return_type" : Message | 204
+                            }
+                    },
+                    cls.Urls.GET_FOLLOWUP_MESSAGE : {
+                        HttpMethods.GET : {
+                            "url_params" :  ("application", "interaction", "message"),
+                            "query_params": GetFollowupMessageQueryParams,
+                            "payload" : None,
+                            "additional_optional_headers": [],
+                            "return_type" : Message
+                            }
+                    },
+                    cls.Urls.EDIT_FOLLOWUP_MESSAGE : {
+                        HttpMethods.PATCH : {
+                            "url_params" :  ("application", "interaction", "message"),
+                            "query_params": EditFollowupMessageQueryParams,
+                            "payload" : EditFollowupMessageJSONParams,
+                            "additional_optional_headers": [],
+                            "return_type" : Message
+                            }
+                    },
+                    cls.Urls.DELETE_FOLLOWUP_MESSAGE : {
+                        HttpMethods.DELETE : {
+                            "url_params" :  ("application", "interaction", "message"),
                             "query_params": None,
                             "payload" : None,
                             "additional_optional_headers": [],
@@ -2238,6 +2330,8 @@ class Webhook(msgspec.Struct, kw_only=True):
         DELETE_WEBHOOK = GET_WEBHOOK
         DELETE_WEBHOOK_WITH_TOKEN = GET_WEBHOOK_WITH_TOKEN
         EXECUTE_WEBHOOK = GET_WEBHOOK_WITH_TOKEN #returns Message
+
+        #These URL's do not have routes, they are generated using the APX Discord Support
         EXECUTE_SLACK_COMPATIBLE_WEBHOOK = "/webhooks/{webhook.id}/{webhook.token}/slack"
         EXECUTE_GITHUB_COMPATIBLE_WEBHOOK = "/webhooks/{webhook.id}/{webhook.token}/github"
 
