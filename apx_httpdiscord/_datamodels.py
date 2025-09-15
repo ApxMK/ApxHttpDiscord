@@ -23,7 +23,7 @@ If you do decide to use the SetActivityArgument class in the RPC discord section
 In the RPC section of this module, the SetActivityArgument class uses the missing Activity msgspec class:
 class SetActivityArgument(msgspec.Struct, kw_only=True):
     pid: int  # application's process id
-    activity: 'Activity'  # rich presence to assign to the user (limited to Playing, Listening, Watching, or Competing)
+    activity: 'Activity'  # rich presence to assign to the user (limited to Playing, Listening, Watching, or Competing).
 
 """
 #Auxillary classes for msgspec classes
