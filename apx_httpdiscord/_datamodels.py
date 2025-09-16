@@ -116,6 +116,7 @@ class Interaction(msgspec.Struct, kw_only=True):
     #Urls FOR InteractionResponse ENDPOINTS
     class InteractionResponseUrls(enum.StrEnum):
         CREATE_INTERACTION_RESPONSE = "/interactions/{interaction.id}/{interaction.token}/callback"
+
         GET_ORIGINAL_INTERACTION_RESPONSE = "/webhooks/{application.id}/{interaction.token}/messages/@original"
         EDIT_ORIGINAL_INTERACTION_RESPONSE = GET_ORIGINAL_INTERACTION_RESPONSE
         DELETE_ORIGINAL_INTERACTION_RESPONSE = GET_ORIGINAL_INTERACTION_RESPONSE
@@ -125,7 +126,7 @@ class Interaction(msgspec.Struct, kw_only=True):
         EDIT_FOLLOWUP_MESSAGE = GET_FOLLOWUP_MESSAGE
         DELETE_FOLLOWUP_MESSAGE = GET_FOLLOWUP_MESSAGE
 
-    #QUERY PARAMS FOR InteractionResponse ENDPOINTS
+    #QUERY PARAMS FOR Interactions ENDPOINTS
     class CreateInteractionResponseQueryParams(msgspec.Struct, omit_defaults=True):
         with_response: bool = False
 
@@ -135,19 +136,19 @@ class Interaction(msgspec.Struct, kw_only=True):
     class EditOriginalInteractionResponseQueryParams(msgspec.Struct, omit_defaults=True):
         thread_id: str | None = None
 
-    class CreateFollowupMessageQueryParams(msgspec.Struct):
+    class CreateFollowupMessageQueryParams(msgspec.Struct, omit_defaults=True):
         """
         Query parameters for the CreateFollowupMessage endpoint.
         """
         thread_id: str | None = None  # ID of the thread to send the message to
 
-    class GetFollowupMessageQueryParams(msgspec.Struct):
+    class GetFollowupMessageQueryParams(msgspec.Struct, omit_defaults=True):
         thread_id: str | None = None  # ID of the thread where the message resides
 
-    class EditFollowupMessageQueryParams(msgspec.Struct):
+    class EditFollowupMessageQueryParams(msgspec.Struct, omit_defaults=True):
         thread_id: str | None = None  # ID of the thread where the message resides
 
-    #JSON PARAMS FOR InteractionResponse ENDPOINTS
+    #JSON PARAMS FOR Interactions ENDPOINTS
     class EditOriginalInteractionResponseJSONParams(msgspec.Struct, omit_defaults=True):
         content: str | None = None
         embeds: list["Embed"] | None = None
@@ -157,7 +158,7 @@ class Interaction(msgspec.Struct, kw_only=True):
         file_locations: list[str] | None = None
         attachments: list["Attachment"] | None = None
 
-    class CreateFollowupMessageJSONParams(msgspec.Struct):
+    class CreateFollowupMessageJSONParams(msgspec.Struct, omit_defaults=True):
         """
         JSON/Form body parameters for the CreateFollowupMessage endpoint.
         """
@@ -170,7 +171,7 @@ class Interaction(msgspec.Struct, kw_only=True):
         flags: int | None = None  # e.g., MessageFlags.EPHEMERAL | MessageFlags.IS_COMPONENTS_V2
         tts: bool | None = None
 
-    class EditFollowupMessageJSONParams(msgspec.Struct):
+    class EditFollowupMessageJSONParams(msgspec.Struct, omit_defaults=True):
         content: str | None = None  # Max 2000 characters
         embeds: list["Embed"] | None = None  # Up to 10 embeds
         allowed_mentions: "AllowedMentions" | None = None
@@ -203,16 +204,17 @@ class Interaction(msgspec.Struct, kw_only=True):
                             "query_params": GetOriginalInteractionResponseQueryParams,
                             "payload" : None, 
                             "additional_optional_headers": [],
-                            "return_type" : InteractionResponse
+                            "return_type" : Message
                             }
                     },
+                    #SAME AS EDIT_WEBHOOK_MESSAGE
                     cls.Urls.EDIT_ORIGINAL_INTERACTION_RESPONSE : {
                         HttpMethods.PATCH : {
                             "url_params" :  ("application", "interaction"),
                             "query_params": EditOriginalInteractionResponseQueryParams,
                             "payload" : EditOriginalInteractionResponseJSONParams, 
                             "additional_optional_headers": [],
-                            "return_type" : InteractionResponse
+                            "return_type" : Message
                             }
                     },
                     cls.Urls.DELETE_ORIGINAL_INTERACTION_RESPONSE : {
@@ -224,6 +226,7 @@ class Interaction(msgspec.Struct, kw_only=True):
                             "return_type" : 204
                             }
                     },
+                    #SAME AS EXECUTE_WEBHOOK
                     cls.Urls.CREATE_FOLLOWUP_MESSAGE : {
                         HttpMethods.POST : {
                             "url_params" :  ("application", "interaction"),
@@ -233,6 +236,7 @@ class Interaction(msgspec.Struct, kw_only=True):
                             "return_type" : Message | 204
                             }
                     },
+                    #SAME AS GET_WEBHOOK_MESSAGE
                     cls.Urls.GET_FOLLOWUP_MESSAGE : {
                         HttpMethods.GET : {
                             "url_params" :  ("application", "interaction", "message"),
@@ -242,6 +246,7 @@ class Interaction(msgspec.Struct, kw_only=True):
                             "return_type" : Message
                             }
                     },
+                    #SAME AS EDIT_WEBHOOK_MESSAGE
                     cls.Urls.EDIT_FOLLOWUP_MESSAGE : {
                         HttpMethods.PATCH : {
                             "url_params" :  ("application", "interaction", "message"),
