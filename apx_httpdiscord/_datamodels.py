@@ -174,7 +174,7 @@ class Interaction(msgspec.Struct, kw_only=True):
                             "url_params" :  ("interaction"),
                             "query_params": CreateInteractionResponseQueryStringParams,
                             "payload" : InteractionResponse,
-                            "additional_optional_headers": [],
+                            "additional_properties": [],
                             "statuscode_returntype_map" : {
                                 200 : InteractionCallbackResponse,
                                 204 : None
@@ -187,7 +187,7 @@ class Interaction(msgspec.Struct, kw_only=True):
                             "url_params" :  ("application", "interaction"),
                             "query_params": GetOriginalInteractionResponseQueryStringParams,
                             "payload" : None, 
-                            "additional_optional_headers": [],
+                            "additional_properties": [],
                             "statuscode_returntype_map" : {
                                 200 : Message,
                                 }
@@ -199,7 +199,7 @@ class Interaction(msgspec.Struct, kw_only=True):
                             "url_params" :  ("application", "interaction"),
                             "query_params": EditOriginalInteractionResponseQueryStringParams,
                             "payload" : EditOriginalInteractionResponseJSONParams, 
-                            "additional_optional_headers": [],
+                            "additional_properties": [],
                             "statuscode_returntype_map" : {
                                 200 : Message,
                                 }
@@ -210,7 +210,7 @@ class Interaction(msgspec.Struct, kw_only=True):
                             "url_params" :  ("application", "interaction"),
                             "query_params": None,
                             "payload" : None,
-                            "additional_optional_headers": [],
+                            "additional_properties": [],
                             "statuscode_returntype_map" : {
                                 204 : None,
                                 }
@@ -222,7 +222,7 @@ class Interaction(msgspec.Struct, kw_only=True):
                             "url_params" :  ("application", "interaction"),
                             "query_params": CreateFollowupMessageQueryStringParams,
                             "payload" : CreateFollowupMessageJSONParams,
-                            "additional_optional_headers": [],
+                            "additional_properties": [],
                             "statuscode_returntype_map" : {
                                 200 : Message,
                                 204 : None
@@ -235,7 +235,7 @@ class Interaction(msgspec.Struct, kw_only=True):
                             "url_params" :  ("application", "interaction", "message"),
                             "query_params": GetFollowupMessageQueryStringParams,
                             "payload" : None,
-                            "additional_optional_headers": [],
+                            "additional_properties": [],
                             "statuscode_returntype_map" : {
                                 200 : Message,
                                 }
@@ -247,7 +247,7 @@ class Interaction(msgspec.Struct, kw_only=True):
                             "url_params" :  ("application", "interaction", "message"),
                             "query_params": EditFollowupMessageQueryStringParams,
                             "payload" : EditFollowupMessageJSONParams,
-                            "additional_optional_headers": [],
+                            "additional_properties": [],
                             "statuscode_returntype_map" : {
                                 200 : Message,
                                 }
@@ -258,7 +258,7 @@ class Interaction(msgspec.Struct, kw_only=True):
                             "url_params" :  ("application", "interaction", "message"),
                             "query_params": None,
                             "payload" : None,
-                            "additional_optional_headers": [],
+                            "additional_properties": [],
                             "statuscode_returntype_map" : {
                                 204 : None,
                                 }
@@ -469,7 +469,7 @@ class ApplicationCommand(msgspec.Struct, kw_only=True, omit_defaults=True):
                             "url_params" :  ("application"),
                             "query_params": GetGlobalApplicationCommandsQueryStringParams,
                             "payload" : None,
-                            "additional_optional_headers": [],
+                            "additional_properties": [],
                             "statuscode_returntype_map" : {
                                     200 : list[ApplicationCommand],
                                 }
@@ -480,7 +480,7 @@ class ApplicationCommand(msgspec.Struct, kw_only=True, omit_defaults=True):
                             "url_params" :  ("application"),
                             "query_params": None,
                             "payload" : ApplicationCommand, 
-                            "additional_optional_headers": [],
+                            "additional_properties": [],
                             "statuscode_returntype_map" : {
                                     200 : ApplicationCommand,
                                     201 : ApplicationCommand
@@ -492,7 +492,7 @@ class ApplicationCommand(msgspec.Struct, kw_only=True, omit_defaults=True):
                             "url_params" :  ("application", "command"),
                             "query_params": None,
                             "payload" : None, 
-                            "additional_optional_headers": [],
+                            "additional_properties": [],
                             "statuscode_returntype_map" : {
                                     200 : ApplicationCommand,
                                 }
@@ -503,7 +503,7 @@ class ApplicationCommand(msgspec.Struct, kw_only=True, omit_defaults=True):
                             "url_params" :  ("application", "command"),
                             "query_params": None,
                             "payload" : ApplicationCommand,
-                            "additional_optional_headers": [],
+                            "additional_properties": [],
                             "statuscode_returntype_map" : {
                                     200 : ApplicationCommand,
                                 }
@@ -514,7 +514,7 @@ class ApplicationCommand(msgspec.Struct, kw_only=True, omit_defaults=True):
                             "url_params" :  ("application", "command"),
                             "query_params": None,
                             "payload" : None,
-                            "additional_optional_headers": [],
+                            "additional_properties": [],
                             "statuscode_returntype_map" : {
                                     204 : None,
                                 }
@@ -525,7 +525,7 @@ class ApplicationCommand(msgspec.Struct, kw_only=True, omit_defaults=True):
                             "url_params" :  ("application"),
                             "query_params": None,
                             "payload" : list[ApplicationCommand],
-                            "additional_optional_headers": [],
+                            "additional_properties": [],
                             "statuscode_returntype_map" : {
                                     200 : list[ApplicationCommand],
                                 }
@@ -1097,7 +1097,7 @@ class Channel(msgspec.Struct, kw_only=True):
                             "url_params" : ("channel"),
                             "query_params": None,
                             "payload" : cls.CreateWebhookJSONParams, 
-                            "additional_optional_headers": ["X-Audit-Log-Reason"],
+                            "additional_properties": ["X-Audit-Log-Reason"],
                             "statuscode_returntype_map" : {
                                     200 : Webhook,
                                 }
@@ -1108,7 +1108,7 @@ class Channel(msgspec.Struct, kw_only=True):
                             "url_params" : ("channel"),
                             "query_params": None,
                             "payload" : None,
-                            "additional_optional_headers": [],
+                            "additional_properties": [],
                             "statuscode_returntype_map" : {
                                     200 : list[Webhook],
                                 }
@@ -1481,7 +1481,7 @@ class Guild(msgspec.Struct, kw_only=True):
         GET_GUILD_APPLICATION_COMMAND_PERMISSIONS = "/applications/{application.id}/guilds/{guild.id}/commands/permissions"
         GET_APPLICATION_COMMAND_PERMISSIONS = "/applications/{application.id}/guilds/{guild.id}/commands/{command.id}/permissions"
         EDIT_APPLICATION_COMMAND_PERMISSIONS = GET_APPLICATION_COMMAND_PERMISSIONS
-
+        
     #Query String Params
     class GetGuildApplicationCommandsQueryStringParams(msgspec.Struct, omit_defaults=True):
         with_localizations: bool = False
@@ -1501,7 +1501,7 @@ class Guild(msgspec.Struct, kw_only=True):
                             "url_params" : ("guild"),
                             "query_params": None,
                             "payload" : None,
-                            "additional_optional_headers": [],
+                            "additional_properties": [],
                             "statuscode_returntype_map" : {
                                     200 : list[Webhook],
                                 }
@@ -1512,7 +1512,7 @@ class Guild(msgspec.Struct, kw_only=True):
                             "url_params" : ("application", "guild"),
                             "query_params": GetGuildApplicationCommandsQueryStringParams,
                             "payload" : None,
-                            "additional_optional_headers": [],
+                            "additional_properties": [],
                             "statuscode_returntype_map" : {
                                     200 : list[ApplicationCommand],
                                 }
@@ -1523,7 +1523,7 @@ class Guild(msgspec.Struct, kw_only=True):
                             "url_params" : ("application", "guild"),
                             "query_params": None,
                             "payload" : ApplicationCommand,
-                            "additional_optional_headers": [],
+                            "additional_properties": [],
                             "statuscode_returntype_map" : {
                                     200 : ApplicationCommand,
                                     201 : ApplicationCommand
@@ -1535,7 +1535,7 @@ class Guild(msgspec.Struct, kw_only=True):
                             "url_params" : ("application", "guild", "command"),
                             "query_params": None,
                             "payload" : None,
-                            "additional_optional_headers": [],
+                            "additional_properties": [],
                             "statuscode_returntype_map" : {
                                     200 : ApplicationCommand,
                                 }
@@ -1546,7 +1546,7 @@ class Guild(msgspec.Struct, kw_only=True):
                             "url_params" : ("application", "guild", "command"),
                             "query_params": None,
                             "payload" : ApplicationCommand,
-                            "additional_optional_headers": [],
+                            "additional_properties": [],
                             "statuscode_returntype_map" : {
                                     200 : ApplicationCommand,
                                 }
@@ -1557,7 +1557,7 @@ class Guild(msgspec.Struct, kw_only=True):
                             "url_params" : ("application", "guild", "command"),
                             "query_params": None,
                             "payload" : None,
-                            "additional_optional_headers": [],
+                            "additional_properties": [],
                             "statuscode_returntype_map" : {
                                     204 : None,
                                 }
@@ -1568,7 +1568,7 @@ class Guild(msgspec.Struct, kw_only=True):
                             "url_params" : ("application", "guild"),
                             "query_params": None,
                             "payload" : list[ApplicationCommand],
-                            "additional_optional_headers": [],
+                            "additional_properties": [],
                             "statuscode_returntype_map" : {
                                     200 : list[ApplicationCommand],
                                 }
@@ -1579,7 +1579,7 @@ class Guild(msgspec.Struct, kw_only=True):
                             "url_params" : ("application", "guild"),
                             "query_params": None,
                             "payload" : None,
-                            "additional_optional_headers": [],
+                            "additional_properties": [],
                             "statuscode_returntype_map" : {
                                     200 : list[GuildApplicationCommandPermissions],
                                 }
@@ -1590,7 +1590,7 @@ class Guild(msgspec.Struct, kw_only=True):
                             "url_params" : ("application", "guild", "command"),
                             "query_params": None,
                             "payload" : None,
-                            "additional_optional_headers": [],
+                            "additional_properties": [],
                             "statuscode_returntype_map" : {
                                     200 : GuildApplicationCommandPermissions,
                                 }
@@ -1601,12 +1601,12 @@ class Guild(msgspec.Struct, kw_only=True):
                             "url_params" : ("application", "guild", "command"),
                             "query_params": None,
                             "payload" : EditApplicationCommandPermissionsJSONParams,
-                            "additional_optional_headers": [],
+                            "additional_properties": ["Bearer"],
                             "statuscode_returntype_map" : {
                                     200 : GuildApplicationCommandPermissions,
                                 }
                             }
-                    },
+                    }
                 }
             )
         return cls.__RELATED_ROUTES
@@ -2654,7 +2654,7 @@ class Webhook(msgspec.Struct, kw_only=True):
                             "url_params": ("webhook"),
                             "query_params": None,
                             "payload" : None,
-                            "additional_optional_headers": [],
+                            "additional_properties": [],
                             "statuscode_returntype_map" : {
                                     200 : Webhook,
                                 }
@@ -2665,7 +2665,7 @@ class Webhook(msgspec.Struct, kw_only=True):
                             "url_params": ("webhook"),
                             "query_params": None,
                             "payload" : None,
-                            "additional_optional_headers": [],
+                            "additional_properties": [],
                             "statuscode_returntype_map" : {
                                     200 : Webhook,
                                 }
@@ -2676,7 +2676,7 @@ class Webhook(msgspec.Struct, kw_only=True):
                             "url_params": ("webhook"),
                             "query_params": None,
                             "payload" : cls.ModifyWebhookJSONParams,
-                            "additional_optional_headers": ["X-Audit-Log-Reason"],
+                            "additional_properties": ["X-Audit-Log-Reason"],
                             "statuscode_returntype_map" : {
                                     200 : Webhook,
                                 }
@@ -2687,7 +2687,7 @@ class Webhook(msgspec.Struct, kw_only=True):
                             "url_params": ("webhook"),
                             "query_params": None,
                             "payload" : cls.ModifyWebhookWithTokenJSONParams,
-                            "additional_optional_headers": ["X-Audit-Log-Reason"],
+                            "additional_properties": ["X-Audit-Log-Reason"],
                             "statuscode_returntype_map" : {
                                     200 : Webhook,
                                 }
@@ -2698,7 +2698,7 @@ class Webhook(msgspec.Struct, kw_only=True):
                             "url_params": ("webhook"),
                             "query_params": None,
                             "payload" : None,
-                            "additional_optional_headers": ["X-Audit-Log-Reason"],
+                            "additional_properties": ["X-Audit-Log-Reason"],
                             "statuscode_returntype_map" : {
                                     204 : None,
                                 }
@@ -2709,7 +2709,7 @@ class Webhook(msgspec.Struct, kw_only=True):
                             "url_params": ("webhook"),
                             "query_params": None,
                             "payload": None,
-                            "additional_optional_headers": ["X-Audit-Log-Reason"],
+                            "additional_properties": ["X-Audit-Log-Reason"],
                             "statuscode_returntype_map" : {
                                     204 : None,
                                 }
@@ -2720,7 +2720,7 @@ class Webhook(msgspec.Struct, kw_only=True):
                             "url_params": ("webhook"),
                             "query_params": ExecuteWebhookQueryStringParams,
                             "payload": ExecuteWebhookJSONParams,
-                            "additional_optional_headers": [],
+                            "additional_properties": [],
                             "statuscode_returntype_map" : {
                                     200 : Message,
                                     204 : None,
@@ -2732,7 +2732,7 @@ class Webhook(msgspec.Struct, kw_only=True):
                             "url_params": ("webhook", "message"),
                             "query_params": GetWebhookMessageQueryStringParams,
                             "payload": None,
-                            "additional_optional_headers": [],
+                            "additional_properties": [],
                             "statuscode_returntype_map" : {
                                     200 : Webhook,
                                 }
@@ -2743,7 +2743,7 @@ class Webhook(msgspec.Struct, kw_only=True):
                             "url_params": ("webhook", "message"),
                             "query_params": EditWebhookMessageQueryStringParams,
                             "payload": EditWebhookMessageJSONParams,
-                            "additional_optional_headers": [],
+                            "additional_properties": [],
                             "statuscode_returntype_map" : {
                                     200 : Webhook,
                                 }
@@ -2754,7 +2754,7 @@ class Webhook(msgspec.Struct, kw_only=True):
                             "url_params": ("webhook", "message"),
                             "query_params": DeleteWebhookMessageQueryStringParams,
                             "payload": None,
-                            "additional_optional_headers": [],
+                            "additional_properties": [],
                             "statuscode_returntype_map" : {
                                     204 : None,
                                 }
