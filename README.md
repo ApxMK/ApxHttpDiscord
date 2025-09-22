@@ -40,6 +40,13 @@ https://discord.gg/Z63gxmFx
       pid: int  # application's process id
         activity: 'Activity'  # rich presence to assign to the user (limited to Playing, Listening, Watching, or Competing)
 
+###### Generic classes
+- Generic classes are classes which are suitable for both serilization into JSON for sending to discord or deserialization from JSON to the generic msgspec class itself.
+- As a result, reducing the creation of multiple classes which have the same fields but differing by the abscence of some fields.
+- However, producing a problem of undetectable field optionality changes during discord server updates.
+e.g If a generic class satisfies class A and class B, whereby the generic class can be instantiated to an instance of class A or class B. If such an update occurs by discord to the optionality property of datatable fields, then ApxHttpDiscord cannot determine a discrepancy during type validation of the generic msgspec class.
+- It therefore becomes important to employ "dynamic value error detection" for attribute accesses on instances of the generic msgspec class.
+
 ###### Snowflake fields
 - Snowflake fields in the discord data tables are implemented in msgspec classes as 'str' rather than 'int'. Remember to convert snowflake field values from 'str' to 'int' before using them in your application.
   
