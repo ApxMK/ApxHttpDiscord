@@ -174,7 +174,7 @@ class Interaction(msgspec.Struct, kw_only=True):
                             "url_params" :  ("interaction"),
                             "query_params": CreateInteractionResponseQueryStringParams,
                             "payload" : InteractionResponse,
-                            "additional_properties": [],
+                            "additional_properties": {},
                             "statuscode_returntype_map" : {
                                 200 : InteractionCallbackResponse,
                                 204 : None
@@ -187,7 +187,7 @@ class Interaction(msgspec.Struct, kw_only=True):
                             "url_params" :  ("application", "interaction"),
                             "query_params": GetOriginalInteractionResponseQueryStringParams,
                             "payload" : None, 
-                            "additional_properties": [],
+                            "additional_properties": {},
                             "statuscode_returntype_map" : {
                                 200 : Message,
                                 }
@@ -199,7 +199,7 @@ class Interaction(msgspec.Struct, kw_only=True):
                             "url_params" :  ("application", "interaction"),
                             "query_params": EditOriginalInteractionResponseQueryStringParams,
                             "payload" : EditOriginalInteractionResponseJSONParams, 
-                            "additional_properties": [],
+                            "additional_properties": {},
                             "statuscode_returntype_map" : {
                                 200 : Message,
                                 }
@@ -210,7 +210,7 @@ class Interaction(msgspec.Struct, kw_only=True):
                             "url_params" :  ("application", "interaction"),
                             "query_params": None,
                             "payload" : None,
-                            "additional_properties": [],
+                            "additional_properties": {},
                             "statuscode_returntype_map" : {
                                 204 : None,
                                 }
@@ -222,7 +222,7 @@ class Interaction(msgspec.Struct, kw_only=True):
                             "url_params" :  ("application", "interaction"),
                             "query_params": CreateFollowupMessageQueryStringParams,
                             "payload" : CreateFollowupMessageJSONParams,
-                            "additional_properties": [],
+                            "additional_properties": {},
                             "statuscode_returntype_map" : {
                                 200 : Message,
                                 204 : None
@@ -235,7 +235,7 @@ class Interaction(msgspec.Struct, kw_only=True):
                             "url_params" :  ("application", "interaction", "message"),
                             "query_params": GetFollowupMessageQueryStringParams,
                             "payload" : None,
-                            "additional_properties": [],
+                            "additional_properties": {},
                             "statuscode_returntype_map" : {
                                 200 : Message,
                                 }
@@ -247,7 +247,7 @@ class Interaction(msgspec.Struct, kw_only=True):
                             "url_params" :  ("application", "interaction", "message"),
                             "query_params": EditFollowupMessageQueryStringParams,
                             "payload" : EditFollowupMessageJSONParams,
-                            "additional_properties": [],
+                            "additional_properties": {},
                             "statuscode_returntype_map" : {
                                 200 : Message,
                                 }
@@ -258,7 +258,7 @@ class Interaction(msgspec.Struct, kw_only=True):
                             "url_params" :  ("application", "interaction", "message"),
                             "query_params": None,
                             "payload" : None,
-                            "additional_properties": [],
+                            "additional_properties": {},
                             "statuscode_returntype_map" : {
                                 204 : None,
                                 }
@@ -443,105 +443,6 @@ class ApplicationCommandPermissionTypes(enum.IntEnum):
     CHANNEL = 3
 
 class ApplicationCommand(msgspec.Struct, kw_only=True, omit_defaults=True):
-
-    #Urls FOR Application Command ENDPOINTS
-    class ApplicationCommandUrls(enum.StrEnum):
-        GET_GLOBAL_APPLICATION_COMMANDS = "/applications/{application.id}/commands"
-        CREATE_GLOBAL_APPLICATION_COMMAND = GET_GLOBAL_APPLICATION_COMMANDS
-        GET_GLOBAL_APPLICATION_COMMAND = "/applications/{application.id}/commands/{command.id}"
-        EDIT_GLOBAL_APPLICATION_COMMAND = GET_GLOBAL_APPLICATION_COMMAND
-        DELETE_GLOBAL_APPLICATION_COMMAND = GET_GLOBAL_APPLICATION_COMMAND
-        BULK_OVERWRITE_GLOBAL_APPLICATION_COMMANDS = GET_GLOBAL_APPLICATION_COMMANDS
-
-    #Query string params
-    class GetGlobalApplicationCommandsQueryStringParams(msgspec.Struct, omit_defaults=True):
-        with_localizations: bool = False
-
-    __RELATED_ROUTES : ClassVar[tuple] = ()
-
-    @classmethod
-    def init_related_routes(cls):
-        if(cls.__RELATED_ROUTES == ()):
-            cls.__RELATED_ROUTES = (
-                {
-                    cls.ApplicationCommandUrls.GET_GLOBAL_APPLICATION_COMMANDS : {
-                        HttpMethods.GET : {
-                            "url_params" :  ("application"),
-                            "query_params": GetGlobalApplicationCommandsQueryStringParams,
-                            "payload" : None,
-                            "additional_properties": [],
-                            "statuscode_returntype_map" : {
-                                    200 : list[ApplicationCommand],
-                                }
-                            }
-                    },
-                    cls.ApplicationCommandUrls.CREATE_GLOBAL_APPLICATION_COMMAND : {
-                        HttpMethods.POST : {
-                            "url_params" :  ("application"),
-                            "query_params": None,
-                            "payload" : ApplicationCommand, 
-                            "additional_properties": [],
-                            "statuscode_returntype_map" : {
-                                    200 : ApplicationCommand,
-                                    201 : ApplicationCommand
-                                }
-                            }
-                    },
-                    cls.ApplicationCommandUrls.GET_GLOBAL_APPLICATION_COMMAND : {
-                        HttpMethods.GET : {
-                            "url_params" :  ("application", "command"),
-                            "query_params": None,
-                            "payload" : None, 
-                            "additional_properties": [],
-                            "statuscode_returntype_map" : {
-                                    200 : ApplicationCommand,
-                                }
-                            }
-                    },
-                    cls.ApplicationCommandUrls.EDIT_GLOBAL_APPLICATION_COMMAND : {
-                        HttpMethods.PATCH : {
-                            "url_params" :  ("application", "command"),
-                            "query_params": None,
-                            "payload" : ApplicationCommand,
-                            "additional_properties": [],
-                            "statuscode_returntype_map" : {
-                                    200 : ApplicationCommand,
-                                }
-                            }
-                    },
-                    cls.ApplicationCommandUrls.DELETE_GLOBAL_APPLICATION_COMMAND : {
-                        HttpMethods.DELETE : {
-                            "url_params" :  ("application", "command"),
-                            "query_params": None,
-                            "payload" : None,
-                            "additional_properties": [],
-                            "statuscode_returntype_map" : {
-                                    204 : None,
-                                }
-                            }
-                    },
-                    cls.ApplicationCommandUrls.BULK_OVERWRITE_GLOBAL_APPLICATION_COMMANDS : {
-                        HttpMethods.PUT : {
-                            "url_params" :  ("application"),
-                            "query_params": None,
-                            "payload" : list[ApplicationCommand],
-                            "additional_properties": [],
-                            "statuscode_returntype_map" : {
-                                    200 : list[ApplicationCommand],
-                                }
-                            }
-                    }
-                }
-            )
-        return cls.__RELATED_ROUTES
-
-    @classmethod
-    def get_related_routes(cls):  # class-level access
-        return cls.init_related_routes()
-
-    @property
-    def RELATED_ROUTES(self):   # instance-level access
-        return self.init_related_routes()
 
     id: str | None = None  # snowflake
     type: 'ApplicationCommandTypes' | None = None  # one of command types, defaults to 1 CHAT_INPUT
@@ -764,6 +665,151 @@ class Application(msgspec.Struct, kw_only=True):
     """
     Applications (or "apps") are containers for developer platform features, and can be installed to Discord servers and/or user accounts.
     """
+
+    #Urls FOR Application Command ENDPOINTS
+    class ApplicationCommandUrls(enum.StrEnum):
+        GET_GLOBAL_APPLICATION_COMMANDS = "/applications/{application.id}/commands"
+        CREATE_GLOBAL_APPLICATION_COMMAND = GET_GLOBAL_APPLICATION_COMMANDS
+        GET_GLOBAL_APPLICATION_COMMAND = "/applications/{application.id}/commands/{command.id}"
+        EDIT_GLOBAL_APPLICATION_COMMAND = GET_GLOBAL_APPLICATION_COMMAND
+        DELETE_GLOBAL_APPLICATION_COMMAND = GET_GLOBAL_APPLICATION_COMMAND
+        BULK_OVERWRITE_GLOBAL_APPLICATION_COMMANDS = GET_GLOBAL_APPLICATION_COMMANDS
+
+    #Urls FOR Application Role Connection Metadata ENDPOINTS
+    class ApplicationRoleConnectionMetadataUrls(enum.StrEnum):
+        GET_APPLICATION_ROLE_CONNECTION_METADATA_RECORDS = "/applications/{application.id}/role-connections/metadata"
+        UPDATE_APPLICATION_ROLE_CONNECTION_METADATA_RECORDS = GET_APPLICATION_ROLE_CONNECTION_METADATA_RECORDS
+
+    #Urls FOR Application ENDPOINTS
+    class ApplicationUrls(enum.StrEnum):
+        GET_CURRENT_APPLICATION = "/applications/@me"
+        EDIT_CURRENT_APPLICATION = GET_CURRENT_APPLICATION
+
+
+
+    #Query string params
+    class GetGlobalApplicationCommandsQueryStringParams(msgspec.Struct, omit_defaults=True):
+        with_localizations: bool = False
+
+    __RELATED_ROUTES : ClassVar[tuple] = ()
+
+    @classmethod
+    def init_related_routes(cls):
+        if(cls.__RELATED_ROUTES == ()):
+            cls.__RELATED_ROUTES = (
+                {
+                    cls.ApplicationCommandUrls.GET_GLOBAL_APPLICATION_COMMANDS : {
+                        HttpMethods.GET : {
+                            "url_params" :  ("application"),
+                            "query_params": GetGlobalApplicationCommandsQueryStringParams,
+                            "payload" : None,
+                            "additional_properties": {},
+                            "statuscode_returntype_map" : {
+                                    200 : list[ApplicationCommand],
+                                }
+                            }
+                    },
+                    cls.ApplicationCommandUrls.CREATE_GLOBAL_APPLICATION_COMMAND : {
+                        HttpMethods.POST : {
+                            "url_params" :  ("application"),
+                            "query_params": None,
+                            "payload" : ApplicationCommand, 
+                            "additional_properties": {},
+                            "statuscode_returntype_map" : {
+                                    200 : ApplicationCommand,
+                                    201 : ApplicationCommand
+                                }
+                            }
+                    },
+                    cls.ApplicationCommandUrls.GET_GLOBAL_APPLICATION_COMMAND : {
+                        HttpMethods.GET : {
+                            "url_params" :  ("application", "command"),
+                            "query_params": None,
+                            "payload" : None, 
+                            "additional_properties": {},
+                            "statuscode_returntype_map" : {
+                                    200 : ApplicationCommand,
+                                }
+                            }
+                    },
+                    cls.ApplicationCommandUrls.EDIT_GLOBAL_APPLICATION_COMMAND : {
+                        HttpMethods.PATCH : {
+                            "url_params" :  ("application", "command"),
+                            "query_params": None,
+                            "payload" : ApplicationCommand,
+                            "additional_properties": {},
+                            "statuscode_returntype_map" : {
+                                    200 : ApplicationCommand,
+                                }
+                            }
+                    },
+                    cls.ApplicationCommandUrls.DELETE_GLOBAL_APPLICATION_COMMAND : {
+                        HttpMethods.DELETE : {
+                            "url_params" :  ("application", "command"),
+                            "query_params": None,
+                            "payload" : None,
+                            "additional_properties": {},
+                            "statuscode_returntype_map" : {
+                                    204 : None,
+                                }
+                            }
+                    },
+                    cls.ApplicationCommandUrls.BULK_OVERWRITE_GLOBAL_APPLICATION_COMMANDS : {
+                        HttpMethods.PUT : {
+                            "url_params" :  ("application"),
+                            "query_params": None,
+                            "payload" : list[ApplicationCommand],
+                            "additional_properties": {},
+                            "statuscode_returntype_map" : {
+                                    200 : list[ApplicationCommand],
+                                }
+                            }
+                    },
+                    cls.ApplicationRoleConnectionMetadataUrls.GET_APPLICATION_ROLE_CONNECTION_METADATA_RECORDS : {
+                        HttpMethods.GET : {
+                            "url_params" : ("application",),
+                            "query_params": None,
+                            "payload" : None,
+                            "additional_properties": {},
+                            "statuscode_returntype_map" : {
+                                    200 : list[ApplicationRoleConnectionMetadata],
+                                }
+                            }   
+                    },
+                    cls.ApplicationRoleConnectionMetadataUrls.UPDATE_APPLICATION_ROLE_CONNECTION_METADATA_RECORDS : {
+                        HttpMethods.PUT : {
+                            "url_params" : ("application",),
+                            "query_params": None,
+                            "payload" : list[ApplicationRoleConnectionMetadata],
+                            "additional_properties": {},
+                            "statuscode_returntype_map" : {
+                                    200 : list[ApplicationRoleConnectionMetadata],
+                                }
+                            }
+                    },
+                    cls.ApplicationUrls.GET_CURRENT_APPLICATION : {
+                        HttpMethods.GET : {
+                            "url_params" : None,
+                            "query_params": None,
+                            "payload" : None,
+                            "additional_properties": {},
+                            "statuscode_returntype_map" : {
+                                    200 : Application,
+                                }
+                            }
+                    },
+                }
+            )
+        return cls.__RELATED_ROUTES
+
+    @classmethod
+    def get_related_routes(cls):  # class-level access
+        return cls.init_related_routes()
+
+    @property
+    def RELATED_ROUTES(self):   # instance-level access
+        return self.init_related_routes()
+
     id : str
     name : str
     icon : str
@@ -1070,20 +1116,107 @@ class VideoQualityModes(enum.IntEnum):
 
 class Channel(msgspec.Struct, kw_only=True):
     """
-    Channel represents a guild channel or DM channel in the Discord application
+    Channel represents a guild channel or DM channel in the Discord application.
     """
 
     class WebhookUrls(enum.StrEnum):
         CREATE_WEBHOOK = "/channels/{channel.id}/webhooks"
         GET_CHANNEL_WEBHOOKS = CREATE_WEBHOOK
 
-    #JSON params for Webhook endpoints
+        GET_WEBHOOK = "/webhooks/{webhook.id}"
+        GET_WEBHOOK_WITH_TOKEN = "/webhooks/{webhook.id}/{webhook.token}"
+        MODIFY_WEBHOOK = GET_WEBHOOK
+        MODIFY_WEBHOOK_WITH_TOKEN = GET_WEBHOOK_WITH_TOKEN
+        DELETE_WEBHOOK = GET_WEBHOOK
+        DELETE_WEBHOOK_WITH_TOKEN = GET_WEBHOOK_WITH_TOKEN
+        EXECUTE_WEBHOOK = GET_WEBHOOK_WITH_TOKEN #returns Message
+
+        #These URL's do not have routes, they are generated using the APX Discord Support
+        EXECUTE_SLACK_COMPATIBLE_WEBHOOK = "/webhooks/{webhook.id}/{webhook.token}/slack"
+        EXECUTE_GITHUB_COMPATIBLE_WEBHOOK = "/webhooks/{webhook.id}/{webhook.token}/github"
+
+        GET_WEBHOOK_MESSAGE = "/webhooks/{webhook.id}/{webhook.token}/messages/{message.id}" #returns Message
+        EDIT_WEBHOOK_MESSAGE = GET_WEBHOOK_MESSAGE #returns Message
+        DELETE_WEBHOOK_MESSAGE = GET_WEBHOOK_MESSAGE
+
+    #QUERY PARAMS FOR WEBHOOK ENDPOINTS
+    class ExecuteWebhookQueryStringParams(msgspec.Struct, kw_only=True, omit_defaults=True):
+        """
+        Query string parameters for the Execute Webhook endpoint.
+        """
+        wait: bool | None = None               # waits for server confirmation of message send
+        thread_id: str | None = None           # snowflake: target thread ID
+        with_components: bool | None = None    # whether to respect components in the request
+
+    class GetWebhookMessageQueryStringParams(msgspec.Struct, kw_only=True, omit_defaults=True):
+        """
+        Query string parameters for GET /webhooks/{webhook.id}/{token}/messages/{message.id}
+        """
+        thread_id: str | None = None  # Snowflake ID of the thread the message is in
+
+    class EditWebhookMessageQueryStringParams(msgspec.Struct, kw_only=True, omit_defaults=True):
+        thread_id: str | None = None  # snowflake id as string
+        with_components: bool | None = None
+
+    class DeleteWebhookMessageQueryStringParams(msgspec.Struct, kw_only=True, omit_defaults=True):
+        """
+        Query parameters for deleting a webhook message.
+        """
+        thread_id: str | None = None  # ID of the thread the message is in (snowflake)
+
+    #JSON PARAMS FOR WEBHOOK ENDPOINTS
     class CreateWebhookJSONParams(msgspec.Struct, kw_only=True):
         """
         JSON parameters for creating a Discord webhook.
         """
         name: str                   # required: 1-80 characters
         avatar: str | None = None   # optional: base64 image data
+
+    class ModifyWebhookJSONParams(msgspec.Struct, kw_only=True, omit_defaults=True):
+        """
+        JSON body for PATCH /webhooks/{webhook.id}
+        """
+        name: str | None = None
+        avatar: str | None = None  # image data (base64-encoded)
+        channel_id: str | None = None  # snowflake (channel ID)
+
+    class ModifyWebhookWithTokenJSONParams(msgspec.Struct, kw_only=True):
+        """
+        JSON parameters for creating a Discord webhook.
+        """
+        name: str                   # required: 1-80 characters
+        avatar: str | None = None   # optional: base64 image data
+
+    class ExecuteWebhookJSONParams(msgspec.Struct, kw_only=True, omit_defaults=True):
+        """
+        JSON/Form body parameters for the Execute Webhook endpoint.
+        """
+        # Core fields (must provide one of: content, embeds, components, file, poll)
+        content: str | None = None
+        username: str | None = None
+        avatar_url: str | None = None
+        tts: bool | None = None
+        embeds: list["Embed"] | None = None
+        allowed_mentions: "AllowedMentions" | None = None
+        components: list["Component"] | None = None
+        file_locations: list[str] | None = None
+        attachments: list["Attachment"] | None = None
+        flags: int | None = None
+        # Forum/media specific
+        thread_name: str | None = None
+        applied_tags: list[str] | None = None # list of snowflakes
+        # Special cases
+        poll: "Poll" | None = None
+
+    class EditWebhookMessageJSONParams(msgspec.Struct, kw_only=True, omit_defaults=True):
+        content: str | None = None
+        embeds: list["Embed"] | None = None
+        flags: int | None = None  # class MessageFlags
+        allowed_mentions: "AllowedMentions" | None = None
+        components: list["Component"] | None = None
+        file_locations: list[str] | None = None
+        attachments: list["Attachment"] | None = None
+        poll: "Poll" | None = None
 
     __RELATED_ROUTES : ClassVar[tuple] = ()
     
@@ -1097,7 +1230,9 @@ class Channel(msgspec.Struct, kw_only=True):
                             "url_params" : ("channel"),
                             "query_params": None,
                             "payload" : cls.CreateWebhookJSONParams, 
-                            "additional_properties": ["X-Audit-Log-Reason"],
+                            "additional_properties": {
+                                    "X-Audit-Log-Reason": (False, str),
+                                },
                             "statuscode_returntype_map" : {
                                     200 : Webhook,
                                 }
@@ -1108,9 +1243,128 @@ class Channel(msgspec.Struct, kw_only=True):
                             "url_params" : ("channel"),
                             "query_params": None,
                             "payload" : None,
-                            "additional_properties": [],
+                            "additional_properties": {},
                             "statuscode_returntype_map" : {
                                     200 : list[Webhook],
+                                }
+                            }
+                    },
+                    cls.WebhookUrls.GET_WEBHOOK : {
+                        HttpMethods.GET : {
+                            "url_params": ("webhook"),
+                            "query_params": None,
+                            "payload" : None,
+                            "additional_properties": {},
+                            "statuscode_returntype_map" : {
+                                    200 : Webhook,
+                                }
+                            }
+                    },
+                    cls.WebhookUrls.GET_WEBHOOK_WITH_TOKEN : {
+                        HttpMethods.GET : {
+                            "url_params": ("webhook"),
+                            "query_params": None,
+                            "payload" : None,
+                            "additional_properties": {},
+                            "statuscode_returntype_map" : {
+                                    200 : Webhook,
+                                }
+                            }
+                    },
+                    cls.WebhookUrls.MODIFY_WEBHOOK : {
+                        HttpMethods.PATCH : {
+                            "url_params": ("webhook"),
+                            "query_params": None,
+                            "payload" : cls.ModifyWebhookJSONParams,
+                            "additional_properties": {
+                                    "X-Audit-Log-Reason": (False, str),
+                                },
+                            "statuscode_returntype_map" : {
+                                    200 : Webhook,
+                                }
+                            }
+                    },
+                    cls.WebhookUrls.MODIFY_WEBHOOK_WITH_TOKEN : {
+                        HttpMethods.PATCH : {
+                            "url_params": ("webhook"),
+                            "query_params": None,
+                            "payload" : cls.ModifyWebhookWithTokenJSONParams,
+                            "additional_properties": {
+                                    "X-Audit-Log-Reason": (False, str),
+                                },
+                            "statuscode_returntype_map" : {
+                                    200 : Webhook,
+                                }
+                            }
+                    },
+                    cls.WebhookUrls.DELETE_WEBHOOK : {
+                        HttpMethods.DELETE : {
+                            "url_params": ("webhook"),
+                            "query_params": None,
+                            "payload" : None,
+                            "additional_properties": {
+                                    "X-Audit-Log-Reason": (False, str),
+                                },
+                            "statuscode_returntype_map" : {
+                                    204 : None,
+                                }
+                            }
+                    },
+                    cls.WebhookUrls.DELETE_WEBHOOK_WITH_TOKEN: {
+                        HttpMethods.DELETE: {
+                            "url_params": ("webhook"),
+                            "query_params": None,
+                            "payload": None,
+                            "additional_properties": {
+                                    "X-Audit-Log-Reason": (False, str),
+                                },
+                            "statuscode_returntype_map" : {
+                                    204 : None,
+                                }
+                            }
+                    },
+                    cls.WebhookUrls.EXECUTE_WEBHOOK: {
+                        HttpMethods.POST: {
+                            "url_params": ("webhook"),
+                            "query_params": ExecuteWebhookQueryStringParams,
+                            "payload": ExecuteWebhookJSONParams,
+                            "additional_properties": {},
+                            "statuscode_returntype_map" : {
+                                    200 : Message,
+                                    204 : None,
+                                }
+                            }
+                    },
+                    cls.WebhookUrls.GET_WEBHOOK_MESSAGE: {
+                        HttpMethods.GET: {
+                            "url_params": ("webhook", "message"),
+                            "query_params": GetWebhookMessageQueryStringParams,
+                            "payload": None,
+                            "additional_properties": {},
+                            "statuscode_returntype_map" : {
+                                    200 : Webhook,
+                                }
+                            }
+                    },
+                    cls.WebhookUrls.EDIT_WEBHOOK_MESSAGE: {
+                        HttpMethods.PATCH: {
+                            "url_params": ("webhook", "message"),
+                            "query_params": EditWebhookMessageQueryStringParams,
+                            "payload": EditWebhookMessageJSONParams,
+                            "additional_properties": {},
+                            "statuscode_returntype_map" : {
+                                    200 : Webhook,
+                                }
+                            }
+                    },
+                    cls.WebhookUrls.DELETE_WEBHOOK_MESSAGE: {
+                        HttpMethods.DELETE: {
+                            "url_params": ("webhook", "message"),
+                            "query_params": DeleteWebhookMessageQueryStringParams,
+                            "payload": None,
+                            "additional_properties": {},
+                            "statuscode_returntype_map" : {
+                                    204 : None,
                                 }
                             }
                     },
@@ -1501,7 +1755,7 @@ class Guild(msgspec.Struct, kw_only=True):
                             "url_params" : ("guild"),
                             "query_params": None,
                             "payload" : None,
-                            "additional_properties": [],
+                            "additional_properties": {},
                             "statuscode_returntype_map" : {
                                     200 : list[Webhook],
                                 }
@@ -1512,7 +1766,7 @@ class Guild(msgspec.Struct, kw_only=True):
                             "url_params" : ("application", "guild"),
                             "query_params": GetGuildApplicationCommandsQueryStringParams,
                             "payload" : None,
-                            "additional_properties": [],
+                            "additional_properties": {},
                             "statuscode_returntype_map" : {
                                     200 : list[ApplicationCommand],
                                 }
@@ -1523,7 +1777,7 @@ class Guild(msgspec.Struct, kw_only=True):
                             "url_params" : ("application", "guild"),
                             "query_params": None,
                             "payload" : ApplicationCommand,
-                            "additional_properties": [],
+                            "additional_properties": {},
                             "statuscode_returntype_map" : {
                                     200 : ApplicationCommand,
                                     201 : ApplicationCommand
@@ -1535,7 +1789,7 @@ class Guild(msgspec.Struct, kw_only=True):
                             "url_params" : ("application", "guild", "command"),
                             "query_params": None,
                             "payload" : None,
-                            "additional_properties": [],
+                            "additional_properties": {},
                             "statuscode_returntype_map" : {
                                     200 : ApplicationCommand,
                                 }
@@ -1546,7 +1800,7 @@ class Guild(msgspec.Struct, kw_only=True):
                             "url_params" : ("application", "guild", "command"),
                             "query_params": None,
                             "payload" : ApplicationCommand,
-                            "additional_properties": [],
+                            "additional_properties": {},
                             "statuscode_returntype_map" : {
                                     200 : ApplicationCommand,
                                 }
@@ -1557,7 +1811,7 @@ class Guild(msgspec.Struct, kw_only=True):
                             "url_params" : ("application", "guild", "command"),
                             "query_params": None,
                             "payload" : None,
-                            "additional_properties": [],
+                            "additional_properties": {},
                             "statuscode_returntype_map" : {
                                     204 : None,
                                 }
@@ -1568,7 +1822,7 @@ class Guild(msgspec.Struct, kw_only=True):
                             "url_params" : ("application", "guild"),
                             "query_params": None,
                             "payload" : list[ApplicationCommand],
-                            "additional_properties": [],
+                            "additional_properties": {},
                             "statuscode_returntype_map" : {
                                     200 : list[ApplicationCommand],
                                 }
@@ -1579,7 +1833,7 @@ class Guild(msgspec.Struct, kw_only=True):
                             "url_params" : ("application", "guild"),
                             "query_params": None,
                             "payload" : None,
-                            "additional_properties": [],
+                            "additional_properties": {},
                             "statuscode_returntype_map" : {
                                     200 : list[GuildApplicationCommandPermissions],
                                 }
@@ -1590,7 +1844,7 @@ class Guild(msgspec.Struct, kw_only=True):
                             "url_params" : ("application", "guild", "command"),
                             "query_params": None,
                             "payload" : None,
-                            "additional_properties": [],
+                            "additional_properties": {},
                             "statuscode_returntype_map" : {
                                     200 : GuildApplicationCommandPermissions,
                                 }
@@ -1601,7 +1855,9 @@ class Guild(msgspec.Struct, kw_only=True):
                             "url_params" : ("application", "guild", "command"),
                             "query_params": None,
                             "payload" : EditApplicationCommandPermissionsJSONParams,
-                            "additional_properties": ["Bearer"],
+                            "additional_properties": {
+                                    "Bearer": (True, str),
+                                },
                             "statuscode_returntype_map" : {
                                     200 : GuildApplicationCommandPermissions,
                                 }
@@ -2550,228 +2806,7 @@ class WebhookEventTypes(enum.StrEnum):
     QuestUserEnrollment = "QUEST_USER_ENROLLMENT"
 
 class Webhook(msgspec.Struct, kw_only=True):
-    class WebhookUrls(enum.StrEnum):
-
-        #These URL's require only the Webhook class alone to resolve
-        GET_WEBHOOK = "/webhooks/{webhook.id}"
-        GET_WEBHOOK_WITH_TOKEN = "/webhooks/{webhook.id}/{webhook.token}"
-        MODIFY_WEBHOOK = GET_WEBHOOK
-        MODIFY_WEBHOOK_WITH_TOKEN = GET_WEBHOOK_WITH_TOKEN
-        DELETE_WEBHOOK = GET_WEBHOOK
-        DELETE_WEBHOOK_WITH_TOKEN = GET_WEBHOOK_WITH_TOKEN
-        EXECUTE_WEBHOOK = GET_WEBHOOK_WITH_TOKEN #returns Message
-
-        #These URL's do not have routes, they are generated using the APX Discord Support
-        EXECUTE_SLACK_COMPATIBLE_WEBHOOK = "/webhooks/{webhook.id}/{webhook.token}/slack"
-        EXECUTE_GITHUB_COMPATIBLE_WEBHOOK = "/webhooks/{webhook.id}/{webhook.token}/github"
-
-        #These URL's require more than the Webhook msgspec class to resolve
-        GET_WEBHOOK_MESSAGE = "/webhooks/{webhook.id}/{webhook.token}/messages/{message.id}" #returns Message
-        EDIT_WEBHOOK_MESSAGE = GET_WEBHOOK_MESSAGE #returns Message
-        DELETE_WEBHOOK_MESSAGE = GET_WEBHOOK_MESSAGE
-
-    #QUERY PARAMS FOR WEBHOOK ENDPOINTS
-    class ExecuteWebhookQueryStringParams(msgspec.Struct, kw_only=True, omit_defaults=True):
-        """
-        Query string parameters for the Execute Webhook endpoint.
-        """
-        wait: bool | None = None               # waits for server confirmation of message send
-        thread_id: str | None = None           # snowflake: target thread ID
-        with_components: bool | None = None    # whether to respect components in the request
-
-    class GetWebhookMessageQueryStringParams(msgspec.Struct, kw_only=True, omit_defaults=True):
-        """
-        Query string parameters for GET /webhooks/{webhook.id}/{token}/messages/{message.id}
-        """
-        thread_id: str | None = None  # Snowflake ID of the thread the message is in
-
-    class EditWebhookMessageQueryStringParams(msgspec.Struct, kw_only=True, omit_defaults=True):
-        thread_id: str | None = None  # snowflake id as string
-        with_components: bool | None = None
-
-    class DeleteWebhookMessageQueryStringParams(msgspec.Struct, kw_only=True, omit_defaults=True):
-        """
-        Query parameters for deleting a webhook message.
-        """
-        thread_id: str | None = None  # ID of the thread the message is in (snowflake)
-
-    #JSON PARAMS FOR WEBHOOK ENDPOINTS
-    class ModifyWebhookJSONParams(msgspec.Struct, kw_only=True, omit_defaults=True):
-        """
-        JSON body for PATCH /webhooks/{webhook.id}
-        """
-        name: str | None = None
-        avatar: str | None = None  # image data (base64-encoded)
-        channel_id: str | None = None  # snowflake (channel ID)
-
-    class ModifyWebhookWithTokenJSONParams(msgspec.Struct, kw_only=True):
-        """
-        JSON parameters for creating a Discord webhook.
-        """
-        name: str                   # required: 1-80 characters
-        avatar: str | None = None   # optional: base64 image data
-
-    class ExecuteWebhookJSONParams(msgspec.Struct, kw_only=True, omit_defaults=True):
-        """
-        JSON/Form body parameters for the Execute Webhook endpoint.
-        """
-        # Core fields (must provide one of: content, embeds, components, file, poll)
-        content: str | None = None
-        username: str | None = None
-        avatar_url: str | None = None
-        tts: bool | None = None
-        embeds: list["Embed"] | None = None
-        allowed_mentions: "AllowedMentions" | None = None
-        components: list["Component"] | None = None
-        file_locations: list[str] | None = None
-        attachments: list["Attachment"] | None = None
-        flags: int | None = None
-        # Forum/media specific
-        thread_name: str | None = None
-        applied_tags: list[str] | None = None # list of snowflakes
-        # Special cases
-        poll: "Poll" | None = None
-
-    class EditWebhookMessageJSONParams(msgspec.Struct, kw_only=True, omit_defaults=True):
-        content: str | None = None
-        embeds: list["Embed"] | None = None
-        flags: int | None = None  # class MessageFlags
-        allowed_mentions: "AllowedMentions" | None = None
-        components: list["Component"] | None = None
-        file_locations: list[str] | None = None
-        attachments: list["Attachment"] | None = None
-        poll: "Poll" | None = None
-
-    __RELATED_ROUTES : ClassVar[tuple] = ()
-
-    @classmethod
-    def init_related_routes(cls):
-        if(cls.__RELATED_ROUTES == ()):
-            cls.__RELATED_ROUTES = (
-                {
-                    cls.WebhookUrls.GET_WEBHOOK : {
-                        HttpMethods.GET : {
-                            "url_params": ("webhook"),
-                            "query_params": None,
-                            "payload" : None,
-                            "additional_properties": [],
-                            "statuscode_returntype_map" : {
-                                    200 : Webhook,
-                                }
-                            }
-                    },
-                    cls.WebhookUrls.GET_WEBHOOK_WITH_TOKEN : {
-                        HttpMethods.GET : {
-                            "url_params": ("webhook"),
-                            "query_params": None,
-                            "payload" : None,
-                            "additional_properties": [],
-                            "statuscode_returntype_map" : {
-                                    200 : Webhook,
-                                }
-                            }
-                    },
-                    cls.WebhookUrls.MODIFY_WEBHOOK : {
-                        HttpMethods.PATCH : {
-                            "url_params": ("webhook"),
-                            "query_params": None,
-                            "payload" : cls.ModifyWebhookJSONParams,
-                            "additional_properties": ["X-Audit-Log-Reason"],
-                            "statuscode_returntype_map" : {
-                                    200 : Webhook,
-                                }
-                            }
-                    },
-                    cls.WebhookUrls.MODIFY_WEBHOOK_WITH_TOKEN : {
-                        HttpMethods.PATCH : {
-                            "url_params": ("webhook"),
-                            "query_params": None,
-                            "payload" : cls.ModifyWebhookWithTokenJSONParams,
-                            "additional_properties": ["X-Audit-Log-Reason"],
-                            "statuscode_returntype_map" : {
-                                    200 : Webhook,
-                                }
-                            }
-                    },
-                    cls.WebhookUrls.DELETE_WEBHOOK : {
-                        HttpMethods.DELETE : {
-                            "url_params": ("webhook"),
-                            "query_params": None,
-                            "payload" : None,
-                            "additional_properties": ["X-Audit-Log-Reason"],
-                            "statuscode_returntype_map" : {
-                                    204 : None,
-                                }
-                            }
-                    },
-                    cls.WebhookUrls.DELETE_WEBHOOK_WITH_TOKEN: {
-                        HttpMethods.DELETE: {
-                            "url_params": ("webhook"),
-                            "query_params": None,
-                            "payload": None,
-                            "additional_properties": ["X-Audit-Log-Reason"],
-                            "statuscode_returntype_map" : {
-                                    204 : None,
-                                }
-                            }
-                    },
-                    cls.WebhookUrls.EXECUTE_WEBHOOK: {
-                        HttpMethods.POST: {
-                            "url_params": ("webhook"),
-                            "query_params": ExecuteWebhookQueryStringParams,
-                            "payload": ExecuteWebhookJSONParams,
-                            "additional_properties": [],
-                            "statuscode_returntype_map" : {
-                                    200 : Message,
-                                    204 : None,
-                                }
-                            }
-                    },
-                    cls.WebhookUrls.GET_WEBHOOK_MESSAGE: {
-                        HttpMethods.GET: {
-                            "url_params": ("webhook", "message"),
-                            "query_params": GetWebhookMessageQueryStringParams,
-                            "payload": None,
-                            "additional_properties": [],
-                            "statuscode_returntype_map" : {
-                                    200 : Webhook,
-                                }
-                            }
-                    },
-                    cls.WebhookUrls.EDIT_WEBHOOK_MESSAGE: {
-                        HttpMethods.PATCH: {
-                            "url_params": ("webhook", "message"),
-                            "query_params": EditWebhookMessageQueryStringParams,
-                            "payload": EditWebhookMessageJSONParams,
-                            "additional_properties": [],
-                            "statuscode_returntype_map" : {
-                                    200 : Webhook,
-                                }
-                            }
-                    },
-                    cls.WebhookUrls.DELETE_WEBHOOK_MESSAGE: {
-                        HttpMethods.DELETE: {
-                            "url_params": ("webhook", "message"),
-                            "query_params": DeleteWebhookMessageQueryStringParams,
-                            "payload": None,
-                            "additional_properties": [],
-                            "statuscode_returntype_map" : {
-                                    204 : None,
-                                }
-                            }
-                    },
-                }
-            )
-        return cls.__RELATED_ROUTES
-
-    @classmethod
-    def get_related_routes(cls):  # class-level access
-        return cls.init_related_routes()
-
-    @property
-    def RELATED_ROUTES(self):   # instance-level access
-        return self.init_related_routes()
-
+    
     id: str  # snowflake, webhook id
     type: 'WebhookTypes'
     guild_id: str | None = None  # snowflake
