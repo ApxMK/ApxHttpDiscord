@@ -684,8 +684,7 @@ class Application(msgspec.Struct, kw_only=True):
     class ApplicationUrls(enum.StrEnum):
         GET_CURRENT_APPLICATION = "/applications/@me"
         EDIT_CURRENT_APPLICATION = GET_CURRENT_APPLICATION
-
-
+        GET_APPLICATION_ACTIVITY_INSTANCE = "/applications/{application.id}/activity-instances/{instance_id}"
 
     #Query string params
     class GetGlobalApplicationCommandsQueryStringParams(msgspec.Struct, omit_defaults=True):
@@ -798,6 +797,18 @@ class Application(msgspec.Struct, kw_only=True):
                                 }
                             }
                     },
+                    cls.ApplicationUrls.EDIT_CURRENT_APPLICATION : {
+                        HttpMethods.PATCH : {
+                            "url_params" : None,
+                            "query_params": None,
+                            "payload" : Application,
+                            "additional_properties": {},
+                            "statuscode_returntype_map" : {
+                                200 : Application,
+                                }
+                            }
+                    },
+
                 }
             )
         return cls.__RELATED_ROUTES
@@ -810,18 +821,18 @@ class Application(msgspec.Struct, kw_only=True):
     def RELATED_ROUTES(self):   # instance-level access
         return self.init_related_routes()
 
-    id : str
-    name : str
-    icon : str
-    description : str
+    id : str | None = None
+    name : str | None = None
+    icon : str | None = None
+    description : str | None = None
     rpc_origins : list[str] = msgspec.field(default_factory=list)
-    bot_public : bool
-    bot_require_code_grant : bool
+    bot_public : bool | None = None
+    bot_require_code_grant : bool | None = None
     bot : 'User' | None = None
     terms_of_service_url : str | None = None
     privacy_policy_url : str | None = None
     owner : 'User' | None = None
-    verify_key : str
+    verify_key : str | None = None
     team : 'Team' | None = None
     guild_id : str | None = None
     guild : 'Guild' | None = None
