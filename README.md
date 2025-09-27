@@ -48,6 +48,7 @@ e.g If a generic class satisfies class A and class B, whereby the generic class 
 - It therefore becomes important to employ "dynamic value error detection" for attribute accesses on instances of the generic msgspec class, expectations of field values from the official discord documentation for these classes cannot be relied upon.
 - The current generic msgspec classes are:
   - ApplicationCommand
+  - Application
 
 ###### Snowflake fields
 - Snowflake fields in the discord data tables are implemented in msgspec classes as 'str' rather than 'int'. Remember to convert snowflake field values from 'str' to 'int' before using them in your application.
