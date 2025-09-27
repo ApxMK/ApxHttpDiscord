@@ -1,5 +1,5 @@
 # Official documentation for the APX http discord python package.
-- Please refer to the "Further development plans" enhancement type issue under github "Issues" section for further understanding of the proposed future feature development plans.
+- Please refer to the "Issues" section for further understanding of the proposed future feature development plans.
 - [Development schedule](#development-schedule) section in the README.md for the "in progress" feature development.
 - [Important application notices](#important-application-notices) section in the README.md for the non-exhaustive list of conditions which may affect the application of the package for your intended use case.
 - This package is subject to changes in the foreseeable future, all updates will be viewable from the official github repository.
@@ -45,7 +45,9 @@ https://discord.gg/Z63gxmFx
 - As a result, reducing the creation of multiple classes which have the same fields but differing by the abscence of some fields.
 - However, producing a problem of undetectable field optionality changes during discord server updates.
 e.g If a generic class satisfies class A and class B, whereby the generic class can be instantiated to an instance of class A or class B. If such an update occurs by discord to the optionality property of datatable fields, then ApxHttpDiscord cannot determine a discrepancy during type validation of the generic msgspec class.
-- It therefore becomes important to employ "dynamic value error detection" for attribute accesses on instances of the generic msgspec class.
+- It therefore becomes important to employ "dynamic value error detection" for attribute accesses on instances of the generic msgspec class, expectations of field values from the official discord documentation for these classes cannot be relied upon.
+- The current generic msgspec classes are:
+  - ApplicationCommand
 
 ###### Snowflake fields
 - Snowflake fields in the discord data tables are implemented in msgspec classes as 'str' rather than 'int'. Remember to convert snowflake field values from 'str' to 'int' before using them in your application.
