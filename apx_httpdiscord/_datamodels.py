@@ -176,8 +176,8 @@ class Interaction(msgspec.Struct, kw_only=True):
                             "payload" : InteractionResponse,
                             "additional_properties": {},
                             "statuscode_returntype_map" : {
-                                200 : InteractionCallbackResponse,
-                                204 : None
+                                    200 : InteractionCallbackResponse,
+                                    204 : None
                                 }
                             }
                     },
@@ -189,7 +189,7 @@ class Interaction(msgspec.Struct, kw_only=True):
                             "payload" : None, 
                             "additional_properties": {},
                             "statuscode_returntype_map" : {
-                                200 : Message,
+                                    200 : Message,
                                 }
                             }
                     },
@@ -201,7 +201,7 @@ class Interaction(msgspec.Struct, kw_only=True):
                             "payload" : EditOriginalInteractionResponseJSONParams, 
                             "additional_properties": {},
                             "statuscode_returntype_map" : {
-                                200 : Message,
+                                    200 : Message,
                                 }
                             }
                     },
@@ -212,7 +212,7 @@ class Interaction(msgspec.Struct, kw_only=True):
                             "payload" : None,
                             "additional_properties": {},
                             "statuscode_returntype_map" : {
-                                204 : None,
+                                    204 : None,
                                 }
                             }
                     },
@@ -224,8 +224,8 @@ class Interaction(msgspec.Struct, kw_only=True):
                             "payload" : CreateFollowupMessageJSONParams,
                             "additional_properties": {},
                             "statuscode_returntype_map" : {
-                                200 : Message,
-                                204 : None
+                                    200 : Message,
+                                    204 : None
                                 }
                             }
                     },
@@ -237,7 +237,7 @@ class Interaction(msgspec.Struct, kw_only=True):
                             "payload" : None,
                             "additional_properties": {},
                             "statuscode_returntype_map" : {
-                                200 : Message,
+                                    200 : Message,
                                 }
                             }
                     },
@@ -249,7 +249,7 @@ class Interaction(msgspec.Struct, kw_only=True):
                             "payload" : EditFollowupMessageJSONParams,
                             "additional_properties": {},
                             "statuscode_returntype_map" : {
-                                200 : Message,
+                                    200 : Message,
                                 }
                             }
                     },
@@ -260,7 +260,7 @@ class Interaction(msgspec.Struct, kw_only=True):
                             "payload" : None,
                             "additional_properties": {},
                             "statuscode_returntype_map" : {
-                                204 : None,
+                                    204 : None,
                                 }
                             }
                     },
@@ -804,7 +804,18 @@ class Application(msgspec.Struct, kw_only=True):
                             "payload" : Application,
                             "additional_properties": {},
                             "statuscode_returntype_map" : {
-                                200 : Application,
+                                    200 : Application,
+                                }
+                            }
+                    },
+                    cls.ApplicationUrls.GET_APPLICATION_ACTIVITY_INSTANCE : {
+                        HttpMethods.GET : {
+                            "url_params" : None,
+                            "query_params": None,
+                            "payload" : None,
+                            "additional_properties": {},
+                            "statuscode_returntype_map" : {
+                                    200 : ActivityInstance,
                                 }
                             }
                     },
