@@ -1,4 +1,4 @@
-# Official documentation for the APX http discord python package.
+# Official documentation for the APX Http Discord python package.
 - Please refer to the "Further development plans" enhancement type issue under github "Issues" section for further understanding of the proposed future feature development plans.
 - [Development schedule](#development-schedule) section in the README.md for the "in progress" feature development.
 - [Important application notices](#important-application-notices) section in the README.md for the non-exhaustive list of conditions which may affect the application of the package for your intended use case.
