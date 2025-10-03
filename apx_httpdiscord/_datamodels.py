@@ -1758,10 +1758,21 @@ class Guild(msgspec.Struct, kw_only=True):
         GET_APPLICATION_COMMAND_PERMISSIONS = "/applications/{application.id}/guilds/{guild.id}/commands/{command.id}/permissions"
         EDIT_APPLICATION_COMMAND_PERMISSIONS = GET_APPLICATION_COMMAND_PERMISSIONS
         
+    class AuditLogUrls(enum.StrEnum):
+        GET_GUILD_AUDIT_LOG = "/guilds/{guild.id}/audit-logs"
+
     #Query String Params
     class GetGuildApplicationCommandsQueryStringParams(msgspec.Struct, omit_defaults=True):
         with_localizations: bool = False
 
+    class GetGuildAuditLogQueryParams(msgspec.Struct, omit_defaults=True):
+        user_id: str | None = None        # snowflake
+        action_type: int | None = None    # integer
+        before: str | None = None         # snowflake
+        after: str | None = None          # snowflake
+        limit: int = 50          # integer (1–100, defaults to 50)
+
+    #JSON Params
     class EditApplicationCommandPermissionsJSONParams(msgspec.Struct, omit_defaults=True):
         permissions: list[ApplicationCommandPermission]
 
@@ -1880,6 +1891,17 @@ class Guild(msgspec.Struct, kw_only=True):
                             "additional_properties": {
                                     "Bearer": (True, str),
                                 },
+                            "statuscode_returntype_map" : {
+                                    200 : GuildApplicationCommandPermissions,
+                                }
+                            }
+                    },
+                    cls.AuditLogUrls.GET_GUILD_AUDIT_LOG : {
+                        HttpMethods.GET : {
+                            "url_params" : {},
+                            "query_params": GetGuildAuditLogQueryParams,
+                            "payload" : None,
+                            "additional_properties": {},
                             "statuscode_returntype_map" : {
                                     200 : GuildApplicationCommandPermissions,
                                 }
