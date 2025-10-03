@@ -1761,6 +1761,10 @@ class Guild(msgspec.Struct, kw_only=True):
     class AuditLogUrls(enum.StrEnum):
         GET_GUILD_AUDIT_LOG = "/guilds/{guild.id}/audit-logs"
 
+    class AutoModerationUrls(enum.StrEnum):
+        LIST_AUTO_MODERATION_RULES_FOR_GUILD = "/guilds/{guild.id}/auto-moderation/rules"
+        GET_AUTO_MODERATION_RULE = "/guilds/{guild.id}/auto-moderation/rules/{auto_moderation_rule.id}"
+
     #Query String Params
     class GetGuildApplicationCommandsQueryStringParams(msgspec.Struct, omit_defaults=True):
         with_localizations: bool = False
@@ -1906,7 +1910,36 @@ class Guild(msgspec.Struct, kw_only=True):
                                     200 : GuildApplicationCommandPermissions,
                                 }
                             }
-                    }
+                    },
+                    cls.AutoModerationUrls.LIST_AUTO_MODERATION_RULES_FOR_GUILD : {
+                        HttpMethods.GET : {
+                            "url_params" : {
+                                    "guild_id": str
+                                },
+                            "query_params": None,
+                            "payload" : None,
+                            "additional_properties": {},
+                            "statuscode_returntype_map" : {
+                                    200 : list[AutoModerationRule],
+                                }
+                            }
+                    },
+                    cls.AutoModerationUrls.GET_AUTO_MODERATION_RULE : {
+                        HttpMethods.GET : {
+                            "url_params" : {
+                                "guild_id" : str, 
+                                "auto_moderation_rule_id": str
+                                },
+                            "query_params": None,
+                            "payload" : None,
+                            "additional_properties": {},
+                            "statuscode_returntype_map" : {
+                                200 : AutoModerationRule,
+                            }
+                        }
+                    },
+
+
                 }
             )
         return cls.__RELATED_ROUTES
