@@ -46,6 +46,10 @@ https://discord.gg/Z63gxmFx
 - However, producing a problem of undetectable field optionality changes during discord server updates.
 e.g If a generic class satisfies class A and class B, whereby the generic class can be instantiated to an instance of class A or class B. If such an update occurs by discord to the optionality property of datatable fields, then ApxHttpDiscord cannot determine a discrepancy during type validation of the generic msgspec class.
 - It therefore becomes important to employ "dynamic value error detection" for attribute accesses on instances of the generic msgspec class.
+- The current generic classes are:
+  - ApplicationCommand
+  - ApplicationRoleConnectionMetadata
+  - AutoModerationRule
 
 ###### Snowflake fields
 - Snowflake fields in the discord data tables are implemented in msgspec classes as 'str' rather than 'int'. Remember to convert snowflake field values from 'str' to 'int' before using them in your application.

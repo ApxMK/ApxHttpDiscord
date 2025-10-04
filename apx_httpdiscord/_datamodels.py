@@ -1073,17 +1073,17 @@ class ActionTypes(enum.IntEnum):
     BLOCK_MEMBER_INTERACTION = 4  # prevents a member from using text, voice, or other interactions
 
 class AutoModerationRule(msgspec.Struct, kw_only=True):
-    id: str
-    guild_id: str
-    name: str
-    creator_id: str
-    event_type: 'EventTypes'
-    trigger_type: 'TriggerTypes'
-    trigger_metadata: 'TriggerMetadata'
-    actions: list['AutoModerationAction']
-    enabled: bool
-    exempt_roles: list[str]
-    exempt_channels: list[str]
+    id: str | None = None
+    guild_id: str | None = None
+    name: str | None = None
+    creator_id: str | None = None
+    event_type: 'EventTypes' | None = None
+    trigger_type: 'TriggerTypes' | None = None
+    trigger_metadata: 'TriggerMetadata' | None = None
+    actions: list['AutoModerationAction'] | None = None
+    enabled: bool | None = None
+    exempt_roles: list[str] | None = None
+    exempt_channels: list[str] | None = None
 
 class TriggerMetadata(msgspec.Struct, kw_only=True):
     keyword_filter: list[str] = msgspec.field(default_factory=list)                # For KEYWORD, MEMBER_PROFILE
@@ -1936,6 +1936,22 @@ class Guild(msgspec.Struct, kw_only=True):
                             "statuscode_returntype_map" : {
                                 200 : AutoModerationRule,
                             }
+                        }
+                    },
+                    cls.AutoModerationUrls.CREATE_AUTO_MODERATION_RULE: {
+                        HttpMethods.POST: {
+                            "url_params": {
+                                "guild_id": str,
+                            },
+                            "query_params": None,
+                            "payload": CreateAutoModerationRuleJSONParams,
+                            "additional_properties": {
+                                "required_permissions": (True, [BitwisePermissionFlags.MANAGE_GUILD]),
+                                "X-Audit-Log-Reason": (False, str)
+                            },
+                            "statuscode_returntype_map": {
+                                200: AutoModerationRule,
+                            },
                         }
                     },
 
