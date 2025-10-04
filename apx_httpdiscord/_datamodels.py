@@ -1944,9 +1944,9 @@ class Guild(msgspec.Struct, kw_only=True):
                                 "guild_id": str,
                             },
                             "query_params": None,
-                            "payload": CreateAutoModerationRuleJSONParams,
+                            "payload": AutoModerationRule,
                             "additional_properties": {
-                                "required_permissions": (True, [BitwisePermissionFlags.MANAGE_GUILD]),
+                                "Required_permissions": (True, [BitwisePermissionFlags.MANAGE_GUILD]),
                                 "X-Audit-Log-Reason": (False, str)
                             },
                             "statuscode_returntype_map": {
@@ -1954,7 +1954,35 @@ class Guild(msgspec.Struct, kw_only=True):
                             },
                         }
                     },
-
+                    cls.AutoModerationUrls.MODIFY_AUTO_MODERATION_RULE : {
+                        HttpMethods.PATCH : {
+                            "url_params" : ("guild", "auto_moderation_rule"),
+                            "query_params": None,
+                            "payload" : AutoModerationRule,
+                            "additional_properties": {
+                                "Required_permissions": (True, [BitwisePermissionFlags.MANAGE_GUILD]),
+                                "X-Audit-Log-Reason": (False, str),
+                            },
+                            "statuscode_returntype_map" : {
+                                200 : AutoModerationRule,
+                            }
+                        }
+                    },
+                    cls.AutoModerationUrls.DELETE_AUTO_MODERATION_RULE : {
+                        HttpMethods.DELETE : {
+                            "url_params" : ("guild", "auto_moderation_rule"),
+                            "query_params": None,
+                            "payload" : None,
+                            "additional_properties": {
+                                "Required-Permissions": (True, [BitwisePermissionFlags.MANAGE_GUILD]),
+                                "Fired-Gateway-Events": (None, ["Auto_Moderation_Rule_Delete"]),
+                                "X-Audit-Log-Reason": (False, str),
+                            },
+                            "statuscode_returntype_map" : {
+                                204 : None,
+                            }
+                        }
+                    },
 
                 }
             )
