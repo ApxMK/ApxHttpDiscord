@@ -1764,6 +1764,9 @@ class Guild(msgspec.Struct, kw_only=True):
     class AutoModerationUrls(enum.StrEnum):
         LIST_AUTO_MODERATION_RULES_FOR_GUILD = "/guilds/{guild.id}/auto-moderation/rules"
         GET_AUTO_MODERATION_RULE = "/guilds/{guild.id}/auto-moderation/rules/{auto_moderation_rule.id}"
+        CREATE_AUTO_MODERATION_RULE = LIST_AUTO_MODERATION_RULES_FOR_GUILD
+        MODIFY_AUTO_MODERATION_RULE = GET_AUTO_MODERATION_RULE
+        DELETE_AUTO_MODERATION_RULE = GET_AUTO_MODERATION_RULE
 
     #Query String Params
     class GetGuildApplicationCommandsQueryStringParams(msgspec.Struct, omit_defaults=True):
